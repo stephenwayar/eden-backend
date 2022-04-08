@@ -1,29 +1,29 @@
 const mongoose = require('mongoose')
 
-const WomenSchema = new mongoose.Schema({
+const ItemSchema = new mongoose.Schema({
   img_URL: {
     type: String
   },
 
-  product_name: {
+  item_name: {
     type: String,
     unique: true
 
   },
 
-  product_description: {
+  item_description: {
     type: String,
     maxlength: 50
   },
 
-  product_price: {
+  item_price: {
     type: Number
   },
 
-  product_quantity: {
+  item_quantity: {
     type: String,
     minlength: 1
   }
 })
 
-module.exports = mongoose.model('Women', WomenSchema)
+module.exports = mongoose.model('Item', ItemSchema)

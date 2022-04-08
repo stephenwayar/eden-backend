@@ -4,6 +4,7 @@ const indexRoute = require('./routes/index')
 const authRoute = require('./routes/auth')
 const menRoute = require('./routes/men')
 const womenRoute = require('./routes/women')
+const kidsRoute = require('./routes/kids')
 const usersRoute = require('./routes/users')
 
 const express = require('express')
@@ -20,10 +21,8 @@ app.use('/', menRoute)
 app.use('/', womenRoute)
 app.use('/', usersRoute)
 
-//MongoDB connect
-
+//MongoDB connection
 console.log("Connecting to MongoDB...")
-
 const uri = process.env.MONGODB_URI
 
 mongoose.connect(uri).then(() => {
@@ -33,7 +32,6 @@ mongoose.connect(uri).then(() => {
 })
 
 const PORT = process.env.PORT
-
 app.listen(PORT, () => {
   console.log(`Server is running at PORT ${PORT}`)
 })
