@@ -11,16 +11,14 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const app = express()
 
+app.use(express.json())
+app.use(cors())
+
 app.use('/', indexRoute)
 app.use('/', authRoute)
 app.use('/', menRoute)
 app.use('/', womenRoute)
 app.use('/', usersRoute)
-
-app.use(cors)
-app.use(express())
-app.use(express.json())
-
 
 //MongoDB connect
 
@@ -31,7 +29,7 @@ const uri = process.env.MONGODB_URI
 mongoose.connect(uri).then(() => {
   console.log("Suceesfully connected to MongoDB")
 }).catch(error => {
-  console.log("Failed to connect to MongoDB", error)
+  console.log("Failed to connect to MongoDB:", error)
 })
 
 const PORT = process.env.PORT
