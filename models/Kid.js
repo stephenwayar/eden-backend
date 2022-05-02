@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const ItemSchema = new mongoose.Schema({
+const KidSchema = new mongoose.Schema({
   img_URL: {
     type: String
   },
@@ -26,4 +26,4 @@ const ItemSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('Item', ItemSchema)
+module.exports = mongoose.model('Kid', KidSchema)

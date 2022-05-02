@@ -6,8 +6,8 @@ exports.get_users = function(req, res, next){
   })
 }
 
-exports.get_user = async function(req, res, next){
-  var ID = req.params.ID
+exports.get_user = function(req, res, next){
+  var ID = req.params.id
   User.findById(ID).then(user => {
     res.status(200).json(user)
   }).catch(() => {
@@ -18,8 +18,8 @@ exports.get_user = async function(req, res, next){
   })
 }
 
-exports.delete_user = async function(req, res, next){
-  var ID = req.params.ID
+exports.delete_user = function(req, res, next){
+  var ID = req.params.id
   User.findByIdAndDelete(ID).then(() => {
     res.status(200).json({
       message: "Successfully deleted user",

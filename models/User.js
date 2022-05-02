@@ -20,6 +20,16 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+
+  telephone: {
+    type: Number,
+    minlength: 10
+  },
+
+  shipping_address: {
+    type: String,
+    maxlength: 20
   }
 })
 

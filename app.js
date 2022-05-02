@@ -10,21 +10,23 @@ const usersRoute = require('./routes/users')
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
+app.use(morgan('tiny'))
 app.use(cors())
 
 app.use('/', indexRoute)
 app.use('/', authRoute)
 app.use('/', menRoute)
+app.use('/', kidsRoute)
 app.use('/', womenRoute)
 app.use('/', usersRoute)
 
-//MongoDB connection
+//MongoDB connect
 console.log("Connecting to MongoDB...")
 const uri = process.env.MONGODB_URI
-
 mongoose.connect(uri).then(() => {
   console.log("Suceesfully connected to MongoDB")
 }).catch(error => {
