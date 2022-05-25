@@ -1,23 +1,23 @@
 const express = require('express')
 const AuthController = require('../controllers/AuthController')
-const router = express.Router()
+const Router = express.Router()
 
 //User routes
+Router.post('/api/auth/login/user', AuthController.post_login_user)
 
-router.post('/api/user/login', AuthController.post_user_login)
+Router.post('/api/auth/register/user', AuthController.post_register_user)
 
-router.post('/api/register', AuthController.post_register)
+Router.post('/api/auth/forgot_password/user', AuthController.post_forgot_password_user)
 
-router.post('/api/user/forgot_password', AuthController.post_user_forgot_password)
-
-router.post('/api/user/reset_password', AuthController.post_user_reset_password)
+Router.post('/api/auth/reset_password/user', AuthController.post_reset_password_user)
 
 //Admin routes
+Router.post('/api/auth/login/admin', AuthController.post_login_admin)
 
-router.post('/api/admin/login', AuthController.post_admin_login)
+Router.post('/api/auth/register/admin', AuthController.post_register_admin)
 
-router.post('/api/admin/forgot_password', AuthController.post_admin_forgot_password)
+Router.post('/api/auth/forgot_password/admin', AuthController.post_forgot_password_admin)
 
-router.post('/api/admin/reset_password', AuthController.post_admin_reset_password)
+Router.post('/api/auth/reset_password/admin', AuthController.post_reset_password_admin)
 
-module.exports = router;
+module.exports = Router;
