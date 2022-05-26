@@ -9,4 +9,6 @@ Router.get('/api/products/:id', ProductController.get_product)
 Router.put('/api/products/:id', ProductController.update_product)
 
 // DELETE route
-Router.delete('/api/products/:id', ProductController.delete_product_item)
+Router.delete('/api/products/:id', ProductController.delete_product)
+
+module.exports = Router

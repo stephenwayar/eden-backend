@@ -39,10 +39,10 @@ const OrderSchema = new mongoose.Schema({
     type: Date
   },
 
-  owner: [{
+  owner: {
     type: String,
     ref: 'User'
-  }],
+  },
 })
 
 OrderSchema.set('toJSON', {

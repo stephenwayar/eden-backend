@@ -6,8 +6,8 @@ exports.get_product = (req, res, next) => {
   let ID = req.params.id
   Product.findById(ID).then(product => {
     res.status(200).json(product)
-  }).catch(error => {
-    logger.error("Error! Product not found", error)
+  }).catch(() => {
+    logger.info("Error! Product not found")
     res.status(404).json({
       success: false,
       message: "Product not found!"
@@ -29,5 +29,19 @@ exports.update_product = (req, res, next) => {
   }).catch(error => {
     logger.error("Error! Failed to update product", error)
     res.status(400).end()
+  })
+}
+
+//DELETE controller
+exports.delete_product = (req, res, next) => {
+  let ID = req.params.id
+  Product.findByIdAndDelete(ID).then(() => {
+    res.status(200).end()
+  }).catch(error => {
+    logger.error('Product does not exist or has been deleted!', error)
+    res.status(400).json({
+      success: false,
+      message: 'Product does not exist or has been deleted!'
+    })
   })
 }

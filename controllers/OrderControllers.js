@@ -27,7 +27,9 @@ exports.order_product = (req, res, next) => {
 
     newOrder.save().then(() => {
       logger.info("Order placed!")
-    }).catch(error => logger.error("Error! Failed to place order", error))
+    }).catch(error => (
+      logger.error("Error! Failed to place order", error)
+    ))
   }
 
   res.status(201).end()
@@ -47,14 +49,44 @@ exports.update_order = (req, res, next) => {
 }
 
 //get controller
-exports.get_pending_orders = (req, res, next) => {
+exports.get_user_orders = (req, res, next) => {
+  let userID = req.params.id
+  Order.find({ owner: userID }).then(orders => {
+    res.status(200).json(orders)
+  })
+}
 
+exports.get_placed_orders = (req, res, next) => {
+  let STATUS = 'placed'
+  Order.find({ status: STATUS }).then(orders => {
+    res.status(200).json(orders)
+  }).catch(error => next(error))
 }
 
 exports.get_confirmed_orders = (req, res, next) => {
+  let STATUS = 'confirmed'
+  Order.find({ status: STATUS }).then(orders => {
+    res.status(200).json(orders)
+  }).catch(error => next(error))
+}
 
+exports.get_outfordelivery_orders = (req, res, next) => {
+  let STATUS = 'outForDelivery'
+  Order.find({ status: STATUS }).then(orders => {
+    res.status(200).json(orders)
+  }).catch(error => next(error))
 }
 
 exports.get_completed_orders = (req, res, next) => {
+  let STATUS = 'completed'
+  Order.find({ status: STATUS }).then(orders => {
+    res.status(200).json(orders)
+  }).catch(error => next(error))
+}
 
+exports.get_canceled_orders = (req, res, next) => {
+  let STATUS = 'canceled'
+  Order.find({ status: STATUS }).then(orders => {
+    res.status(200).json(orders)
+  }).catch(error => next(error))
 }
