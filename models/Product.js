@@ -34,7 +34,10 @@ const ProductSchema = new mongoose.Schema({
       'women_clothe',
       'women_shoe',
       'women_accessory',
-      'women_underwear'
+      'women_underwear',
+      'kids_toys',
+      'kids_pink',
+      'kids_blue'
     ]
   },
 })
