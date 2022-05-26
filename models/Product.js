@@ -24,7 +24,7 @@ const ProductSchema = new mongoose.Schema({
     minlength: 1
   },
 
-  type: {
+  tag: {
     type: String,
     enum: [
       'men_clothe',

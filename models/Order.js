@@ -10,12 +10,28 @@ const OrderSchema = new mongoose.Schema({
     unique: true
   },
 
+  description: {
+    type: String,
+    maxlength: 50
+  },
+
+  price: {
+    type: Number
+  },
+
+  quantity: {
+    type: String,
+    minlength: 1
+  },
+
   status: {
     type: String,
     enum: [
-      'pending',
+      'placed',
       'confirmed',
-      'completed'
+      'outForDelivery',
+      'completed',
+      'canceled'
     ]
   },
 
