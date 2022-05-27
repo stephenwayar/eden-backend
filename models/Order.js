@@ -1,29 +1,6 @@
 const mongoose = require('mongoose')
 
 const OrderSchema = new mongoose.Schema({
-  img_URL: {
-    type: String
-  },
-
-  name: {
-    type: String,
-    unique: true
-  },
-
-  description: {
-    type: String,
-    maxlength: 50
-  },
-
-  price: {
-    type: Number
-  },
-
-  quantity: {
-    type: String,
-    minlength: 1
-  },
-
   status: {
     type: String,
     enum: [
@@ -35,14 +12,19 @@ const OrderSchema = new mongoose.Schema({
     ]
   },
 
-  date: {
-    type: Date
-  },
-
-  owner: {
+  customer: {
     type: String,
     ref: 'User'
   },
+
+  order_item: [{
+    type: String,
+    ref: 'OrderItem'
+  }],
+
+  date: {
+    type: Date
+  }
 })
 
 OrderSchema.set('toJSON', {
