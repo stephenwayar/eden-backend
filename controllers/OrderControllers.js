@@ -3,6 +3,13 @@ const logger = require('../utils/logger')
 
 //post controller
 exports.order_product = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let dateToday = new Date().toLocaleDateString('en-us',
   {
     weekday:"long",
@@ -37,6 +44,13 @@ exports.order_product = (req, res, next) => {
 
 //put controller
 exports.update_order = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let ID = req.params.id
   let { status } = req.body
   Order.findByIdAndUpdate(ID, { status }, { new: true, runValidators: true, context: 'query' }).then(updatedOrder => {

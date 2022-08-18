@@ -2,12 +2,26 @@ const User = require("../models/User")
 const logger = require('../utils/logger')
 
 exports.get_users = function(req, res, next){
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   User.find({}).then(users => {
     res.status(200).json(users)
   }).catch(error => next(error))
 }
 
 exports.get_user = function(req, res, next){
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let ID = req.params.id
   User.findById(ID).then(user => {
     res.status(200).json(user)
@@ -21,6 +35,13 @@ exports.get_user = function(req, res, next){
 }
 
 exports.delete_user = function(req, res, next){
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let ID = req.params.id
   User.findByIdAndDelete(ID).then(() => {
     logger.info('Successfully deleted user')

@@ -19,10 +19,11 @@ const UserSchema = new mongoose.Schema({
 
   password: {
     type: String,
+    minlength: 4,
     required: true
   },
 
-  telephone: {
+  phone_number: {
     type: Number,
     minlength: 10
   },

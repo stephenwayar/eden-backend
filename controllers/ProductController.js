@@ -3,6 +3,13 @@ const logger = require('../utils/logger')
 
 // GET controller
 exports.get_product = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let ID = req.params.id
   Product.findById(ID).then(product => {
     res.status(200).json(product)
@@ -17,6 +24,13 @@ exports.get_product = (req, res, next) => {
 
 // PUT controller
 exports.update_product = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let ID = req.params.id
   let { img_URL, name, description, price, quantity, tag } = req.body
   Product.findByIdAndUpdate(
@@ -34,6 +48,13 @@ exports.update_product = (req, res, next) => {
 
 //DELETE controller
 exports.delete_product = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let ID = req.params.id
   Product.findByIdAndDelete(ID).then(() => {
     res.status(200).end()

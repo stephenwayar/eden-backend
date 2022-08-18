@@ -10,6 +10,13 @@ exports.get_men_clothing = (req, res, next) => {
 }
 
 exports.add_men_clothe = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let body = req.body
   let TAG = 'men_clothe'
   let product = new Product({
@@ -41,6 +48,13 @@ exports.get_men_shoes = (req, res, next) => {
 }
 
 exports.add_men_shoe = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let body = req.body
   let TAG = 'men_shoe'
   let product = new Product({
@@ -72,6 +86,13 @@ exports.get_men_accessories = (req, res, next) => {
 }
 
 exports.add_men_accessory = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let body = req.body
   let TAG = 'men_accessory'
   let product = new Product({
@@ -103,6 +124,13 @@ exports.get_men_underwears = (req, res, next) => {
 }
 
 exports.add_men_underwear = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let body = req.body
   let TAG = 'men_underwear'
   let product = new Product({

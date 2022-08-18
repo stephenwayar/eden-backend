@@ -10,6 +10,13 @@ exports.get_kids_toys = (req, res, next) => {
 }
 
 exports.add_kids_toys = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let body = req.body
   let TAG = 'kids_toys'
   let product = new Product({
@@ -41,6 +48,13 @@ exports.get_kids_pink = (req, res, next) => {
 }
 
 exports.add_kids_pink = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let body = req.body
   let TAG = 'kids_pink'
   let product = new Product({
@@ -72,6 +86,13 @@ exports.get_kids_blue = (req, res, next) => {
 }
 
 exports.add_kids_blue = (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
   let body = req.body
   let TAG = 'kids_blue'
   let product = new Product({
