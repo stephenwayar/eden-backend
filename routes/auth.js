@@ -1,13 +1,23 @@
 const express = require('express')
 const AuthController = require('../controllers/AuthController')
-const router = express.Router()
+const Router = express.Router()
 
-router.post('/api/login', AuthController.post_login)
+//User routes
+Router.post('/api/auth/login/user', AuthController.post_login_user)
 
-router.post('/api/register', AuthController.post_register)
+Router.post('/api/auth/register/user', AuthController.post_register_user)
 
-router.post('/api/forgot_password', AuthController.post_forgot_password)
+Router.post('/api/auth/forgot_password/user', AuthController.post_forgot_password_user)
 
-router.post('/api/reset_password', AuthController.post_reset_password)
+Router.post('/api/auth/reset_password/user', AuthController.post_reset_password_user)
 
-module.exports = router;
+//Admin routes
+Router.post('/api/auth/login/admin', AuthController.post_login_admin)
+
+Router.post('/api/auth/register/admin', AuthController.post_register_admin)
+
+Router.post('/api/auth/forgot_password/admin', AuthController.post_forgot_password_admin)
+
+Router.post('/api/auth/reset_password/admin', AuthController.post_reset_password_admin)
+
+module.exports = Router;

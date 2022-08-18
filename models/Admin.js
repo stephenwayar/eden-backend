@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const UserSchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true
@@ -19,30 +19,14 @@ const UserSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    minlength: 4,
     required: true
-  },
-
-  phone_number: {
-    type: Number,
-    minlength: 10
-  },
-
-  shipping_address: {
-    type: String,
-    maxlength: 20
-  },
-
-  orders: [{
-    type: String,
-    ref: 'Order'
-  }],
+  }
 })
 
-UserSchema.set('toJSON', {
+AdminSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     delete returnedObject.__v
   }
 })
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('Admin', AdminSchema)

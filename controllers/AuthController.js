@@ -1,87 +1,181 @@
-const bcrypt = require("bcryptjs");
-const User = require('../models/User');
+const bcrypt = require("bcryptjs")
+const User = require('../models/User')
+const Admin = require('../models/Admin')
+const logger = require('../utils/logger')
+const jwt = require('jsonwebtoken')
 
-exports.post_login = async function(req, res, next){
-  email = req.body.email.toLowerCase();
-  password = req.body.password
+//User controllers
+exports.post_login_user = async (req, res, next) => {
+  const { email, password } = req.body
 
-  User.findOne({ email: email })
-    .then(user => {
-      if (!user) {
-        res.status(404).json({ 
-          message: "Email or Password is incorrect",
-          success: false
-        });
-      }else {
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-          if (err) throw err;
-          if (isMatch) {
-            res.status(200).json({ 
-              message: "Successfully logged in", 
-              success: true
-            });
-          } else {
-            res.status(404).json({
-              message: 'Email or Password is incorrect',
-              success: false
-            })
-          }
-        })
-      }
-    }).catch(() => {
-      res.status(404).json({
-        message: 'Error Invalid Credentials',
-        success: false
-      })
+  const user = await User.findOne({ email })
+
+  const passwordIsCorrect = user ? await bcrypt.compare(password, user.password) : false
+
+  if(!(user && passwordIsCorrect)){
+    logger.info(user, passwordIsCorrect)
+    return res.status(401).json({
+      success: false,
+      message: "Email or password is incorrect"
     })
+  }
+
+  const userForToken = {
+    email: user.email,
+    id: user._id,
+  }
+
+  const token = jwt.sign(
+    userForToken,
+    process.env.SECRET,
+    { expiresIn: 60 * 60 }
+  )
+
+  res.status(200).send({
+    token,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    phone_number: user.phone_number,
+    shipping_address: user.shipping_address ? user.shipping_address : null,
+    orders: user.orders ? user.orders : null
+  })
 }
 
-exports.post_register = (req, res, next) => {
-  var body = req.body
+exports.post_register_user = async (req, res, next) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    phone_number
+  } = req.body
 
-  var firstName = req.body.firstName;
-  var lastName = req.body.lastName;
-  var email = req.body.email.toLowerCase();
-  var password = req.body.password;
+  const user = await User.findOne({ email })
+
+  if(user){
+    return res.status(400).json({
+      success: false,
+      message: "There is a user with this email already"
+    })
+  }
 
   const newUser = new User({
     firstName,
     lastName,
     email,
-    password
+    password,
+    phone_number
   })
 
-  User.findOne({ email: email }) 
-    .then(user => {
-      if (!user) {
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash
-            newUser.save().then(() => {
-              res.status(200).json({
-                message: "Successfully registered", 
-                success: true
-              })
-              console.log("I passed jackpot!")
-            }).catch((error) => {
-              return res.status(404).send('Error registering')
-            });
-          });
-        })
-      }else {
-        return res.status(200).json({
-          success: false,
-          message: "There's a user registered with this email already"
-        })
+  bcrypt.genSalt(10, (_err, salt) => {
+    bcrypt.hash(newUser.password, salt, async (err, hash) => {
+      if (err) throw err
+
+      newUser.password = hash
+
+      try{
+        const savedUser = await newUser.save()
+
+        res.status(201).json(savedUser)
+      } catch(error) {
+        next(error)
       }
-    });
+    })
+  })
 }
 
-exports.post_forgot_password = async function(req, res, next){
+exports.post_forgot_password_user = async (req, res, next) => {
 
 }
 
-exports.post_reset_password = async function(req, res, next){
+exports.post_reset_password_user = async (req, res, next) => {
+
+}
+
+//Admin controllers
+exports.post_login_admin = async (req, res, next) => {
+  const { email, password } = req.body
+
+  const admin = await Admin.findOne({ email })
+
+  const passwordIsCorrect = admin ? await bcrypt.compare(password, admin.password) : false
+
+  if(!(admin && passwordIsCorrect)){
+    logger.info(admin, passwordIsCorrect)
+    return res.status(401).json({
+      success: false,
+      message: "Email or password is incorrect"
+    })
+  }
+
+  const adminForToken = {
+    email: admin.email,
+    id: admin._id,
+  }
+
+  const token = jwt.sign(
+    adminForToken,
+    process.env.SECRET,
+    { expiresIn: 60 * 60 }
+  )
+
+  res.status(200).send({
+    token,
+    firstName: admin.firstName,
+    lastName: admin.lastName,
+    email: admin.email,
+    role: admin.role
+  })
+}
+
+exports.post_register_admin = async (req, res, next) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+  } = req.body
+
+  const admin = await Admin.findOne({ email })
+  const user = await User.findOne({ email })
+
+  if(admin || user){
+    return res.status(400).json({
+      success: false,
+      message: "There is a user with this email already"
+    })
+  }
+
+  const newAdmin = new Admin({
+    firstName,
+    lastName,
+    email,
+    password,
+    phone_number
+  })
+
+  bcrypt.genSalt(10, (_err, salt) => {
+    bcrypt.hash(newAdmin.password, salt, async (err, hash) => {
+      if (err) throw err
+
+      newAdmin.password = hash
+
+      try{
+        const savedAdmin = await newAdmin.save()
+
+        res.status(201).json(savedAdmin)
+      } catch(error) {
+        next(error)
+      }
+    })
+  })
+}
+
+exports.post_forgot_password_admin = (req, res, next) => {
+
+}
+
+exports.post_reset_password_admin = (req, res, next) => {
 
 }

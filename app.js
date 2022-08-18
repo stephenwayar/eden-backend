@@ -1,39 +1,41 @@
 require('dotenv').config()
 
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const morgan = require('morgan')
+
+require("./database/config")
 const indexRoute = require('./routes/index')
 const authRoute = require('./routes/auth')
+const usersRoute = require('./routes/users')
 const menRoute = require('./routes/men')
 const womenRoute = require('./routes/women')
-const usersRoute = require('./routes/users')
+const kidsRoute = require('./routes/kids')
+const productsRoute = require('./routes/products')
+const ordersRoute = require('./routes/orders')
+const { unknownEndpoint, errorHandler } = require('./middlewares/error')
+const { tokenExtractor } = require('./middlewares/tokenExtractor')
+const { userExtractor } = require('./middlewares/userExtractor')
 
-const express = require('express')
-const mongoose = require('mongoose')
-const cors = require('cors')
-const app = express()
-
-app.use(express.json())
 app.use(cors())
+app.use(express.json())
+app.use(express.static('build'))
+app.use(morgan('tiny'))
 
-app.use('/', indexRoute)
-app.use('/', authRoute)
-app.use('/', menRoute)
-app.use('/', womenRoute)
-app.use('/', usersRoute)
+app.use(tokenExtractor)
 
-//MongoDB connect
+app.use(indexRoute)
+app.use(authRoute)
+app.use(userExtractor, usersRoute)
 
-console.log("Connecting to MongoDB...")
+app.use(userExtractor, menRoute)
+app.use(userExtractor, womenRoute)
+app.use(userExtractor, kidsRoute)
+app.use(userExtractor, ordersRoute)
+app.use(userExtractor, productsRoute)
 
-const uri = process.env.MONGODB_URI
+app.use(unknownEndpoint)
+app.use(errorHandler)
 
-mongoose.connect(uri).then(() => {
-  console.log("Suceesfully connected to MongoDB")
-}).catch(error => {
-  console.log("Failed to connect to MongoDB:", error)
-})
-
-const PORT = process.env.PORT
-
-app.listen(PORT, () => {
-  console.log(`Server is running at PORT ${PORT}`)
-})
+module.exports = app

@@ -1,15 +1,25 @@
 const express = require('express')
 const WomenController = require('../controllers/WomenController')
-const router = express.Router()
+const Router = express.Router()
 
-router.get('/api/shop/women', WomenController.get_all_women)
+//clothing routes
+Router.get('/api/women/clothing', WomenController.get_women_clothes)
 
-router.get('/api/shop/women/:id', WomenController.get_single_women)
+Router.post('/api/women/clothing', WomenController.add_women_clothe)
 
-router.post('/api/shop/women', WomenController.post_women)
+//shoes routes
+Router.get('/api/women/shoes', WomenController.get_women_shoes)
 
-router.put('/api/shop/women/:id', WomenController.update_women)
+Router.post('/api/women/shoes', WomenController.add_women_shoe)
 
-router.delete('/api/shop/women/:id', WomenController.delete_women)
+//accessories routes
+Router.get('/api/women/accessories', WomenController.get_women_accessories)
 
-module.exports = router
+Router.post('/api/women/accessories', WomenController.add_women_accessory)
+
+//underwears routes
+Router.get('/api/women/underwears', WomenController.get_women_underwears)
+
+Router.post('/api/women/underwears', WomenController.add_women_underwear)
+
+module.exports = Router

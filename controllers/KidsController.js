@@ -1,15 +1,15 @@
 const Product = require('../models/Product')
 const logger = require('../utils/logger')
 
-//clothing controllers
-exports.get_men_clothing = (req, res, next) => {
-  let TAG = 'men_clothe'
+// toys controllers
+exports.get_kids_toys = (req, res, next) => {
+  let TAG = 'kids_toys'
   Product.find({ tag: TAG }).then(products => {
     res.status(200).json(products)
   }).catch(error => next(error))
 }
 
-exports.add_men_clothe = (req, res, next) => {
+exports.add_kids_toys = (req, res, next) => {
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -18,7 +18,7 @@ exports.add_men_clothe = (req, res, next) => {
   }
 
   let body = req.body
-  let TAG = 'men_clothe'
+  let TAG = 'kids_toys'
   let product = new Product({
     img_URL: body.img_URL,
     name: body.name,
@@ -28,26 +28,26 @@ exports.add_men_clothe = (req, res, next) => {
     tag: TAG
   })
   product.save().then(product => {
-    logger.info("Clothe saved!")
+    logger.info("Kids toy saved!")
     res.status(200).json(product)
   }).catch(error => {
-    logger.error('Error! Clothe not saved', error)
+    logger.error('Error! Kids toy not saved', error)
     res.status(400).json({
       success: false,
-      message: "Error! Clothe not saved"
+      message: "Error! Kids toy not saved"
     })
   })
 }
 
-// shoe controllers
-exports.get_men_shoes = (req, res, next) => {
-  let TAG = 'men_shoe'
+// pink (girls) controllers
+exports.get_kids_pink = (req, res, next) => {
+  let TAG = 'kids_pink'
   Product.find({ tag: TAG }).then(products => {
     res.status(200).json(products)
   }).catch(error => next(error))
 }
 
-exports.add_men_shoe = (req, res, next) => {
+exports.add_kids_pink = (req, res, next) => {
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -56,7 +56,7 @@ exports.add_men_shoe = (req, res, next) => {
   }
 
   let body = req.body
-  let TAG = 'men_shoe'
+  let TAG = 'kids_pink'
   let product = new Product({
     img_URL: body.img_URL,
     name: body.name,
@@ -66,26 +66,26 @@ exports.add_men_shoe = (req, res, next) => {
     tag: TAG
   })
   product.save().then(product => {
-    logger.info('Shoe saved!')
+    logger.info("Kids girl wear saved!")
     res.status(200).json(product)
   }).catch(error => {
-    logger.error('Error! Shoe not saved', error)
+    logger.error('Error! girl wear not saved', error)
     res.status(400).json({
       success: false,
-      message: "Error! Shoe not saved"
+      message: "Error! girl wear not saved"
     })
   })
 }
 
-//accessories controllers
-exports.get_men_accessories = (req, res, next) => {
-  let TAG = 'men_accessory'
+// blue (boys) controllers
+exports.get_kids_blue = (req, res, next) => {
+  let TAG = 'kids_blue'
   Product.find({ tag: TAG }).then(products => {
     res.status(200).json(products)
   }).catch(error => next(error))
 }
 
-exports.add_men_accessory = (req, res, next) => {
+exports.add_kids_blue = (req, res, next) => {
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -94,7 +94,7 @@ exports.add_men_accessory = (req, res, next) => {
   }
 
   let body = req.body
-  let TAG = 'men_accessory'
+  let TAG = 'kids_blue'
   let product = new Product({
     img_URL: body.img_URL,
     name: body.name,
@@ -104,51 +104,13 @@ exports.add_men_accessory = (req, res, next) => {
     tag: TAG
   })
   product.save().then(product => {
-    logger.info('Accessory saved!')
+    logger.info("Kids boy wear saved!")
     res.status(200).json(product)
   }).catch(error => {
-    logger.error('Error! Accessory not saved', error)
+    logger.error('Error! boy wear not saved', error)
     res.status(400).json({
       success: false,
-      message: "Error! Accessory not saved"
-    })
-  })
-}
-
-//underwears controllers
-exports.get_men_underwears = (req, res, next) => {
-  let TAG = 'men_underwear'
-  Product.find({ tag: TAG }).then(products => {
-    res.status(200).json(products)
-  }).catch(error => next(error))
-}
-
-exports.add_men_underwear = (req, res, next) => {
-  if (!req.user) {
-    logger.info('token is missing')
-    return res.status(401).json({
-      error: 'token missing or invalid'
-    })
-  }
-
-  let body = req.body
-  let TAG = 'men_underwear'
-  let product = new Product({
-    img_URL: body.img_URL,
-    name: body.name,
-    description: body.description,
-    price: body.price,
-    quantity: body.quantity,
-    tag: TAG
-  })
-  product.save().then(product => {
-    logger.info('Underwear saved!')
-    res.status(200).json(product)
-  }).catch(error => {
-    logger.error('Error! Underwear not saved', error)
-    res.status(400).json({
-      success: false,
-      message: "Error! Underwear not saved"
+      message: "Error! boy wear not saved"
     })
   })
 }
