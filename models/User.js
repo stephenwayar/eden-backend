@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
 
   phone_number: {
     type: Number,
-    minlength: 10
+    minlength: 8
   },
 
   shipping_address: {
