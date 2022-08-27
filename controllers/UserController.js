@@ -34,6 +34,31 @@ exports.get_user = function(req, res, next){
   })
 }
 
+exports.update_user_details = function(req, res, next){
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
+  let ID = req.params.id
+  let { firstName, lastName, password, phone_number, shipping_address } = req.body
+  User.findByIdAndUpdate(
+    ID,
+    { firstName, lastName, phone_number, shipping_address },
+    { new: true, runValidators: true, context: 'query' }
+    ).then(user => {
+    res.status(200).json(user)
+  }).catch(() => {
+    logger.info('Failed to update user details!')
+    res.status(400).json({
+      message: "Failed to update user details",
+      success: false
+    })
+  })
+}
+
 exports.delete_user = function(req, res, next){
   if (!req.user) {
     logger.info('token is missing')
