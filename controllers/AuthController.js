@@ -151,8 +151,7 @@ exports.post_register_admin = async (req, res, next) => {
     firstName,
     lastName,
     email,
-    password,
-    phone_number
+    password
   })
 
   bcrypt.genSalt(10, (_err, salt) => {
