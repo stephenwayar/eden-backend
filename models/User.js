@@ -37,11 +37,22 @@ const UserSchema = new mongoose.Schema({
     type: String,
     ref: 'Order'
   }],
-})
+
+  otpToken: {
+    type: Number
+  },
+
+  otpExpires: {
+    type: Date
+  }
+}, { timestamps: true })
 
 UserSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     delete returnedObject.__v
+    delete returnedObject.password
+    delete returnedObject.otpToken
+    delete returnedObject.otpExpires
   }
 })
 

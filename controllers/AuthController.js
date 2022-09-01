@@ -95,21 +95,75 @@ exports.post_forgot_password_user = async (req, res) => {
     })
   }
 
-  setTimeout(() => {
+  try{
+    const token = Math.floor(1000 + Math.random() * 9000)
+
+    user.otpToken = token
+    user.otpExpires = Date.now() + 3600000
+
+    await user.save()
+
+    // code to send otp to email
+
     res.status(200).end()
-  }, 3000)
+  }catch(exception){
+    res.status(400).json({
+      success: false,
+      message: 'Failed to process request. Try again'
+    })
+  }
 }
 
 exports.post_reset_password_user = async (req, res, next) => {
-  setTimeout(() => {
-    res.status(200).end()
-  }, 3000)
+  const user = await User.findOne({ email: req.body.email })
+
+  if(!user){
+    return res.status(404).json({
+      success: false,
+      message: 'Sorry, user does not exist in our records'
+    })
+  }
+
+  bcrypt.genSalt(10, (_err, salt) => {
+    bcrypt.hash(req.body.password, salt, async (err, hash) => {
+      if (err) throw err
+
+      user.password = hash
+      user.otpToken = null
+      user.otpExpires = null
+
+      try{
+        await user.save()
+
+        res.status(200).end()
+      } catch(exception) {
+        res.status(400).json({
+          success: false,
+          message: 'Failed to reset password. Try again'
+        })
+      }
+    })
+  })
 }
 
-exports.validate_user_otp = async (req, res, next) => {
-  setTimeout(() => {
-    res.status(200).end()
-  }, 3000)
+exports.verify_user_otp = async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email })
+
+  if(!user){
+    return res.status(404).json({
+      success: false,
+      message: 'Snap! there was a problem somewhere'
+    })
+  }
+
+  if(user.otpToken.toString() === req.body.code && user.otpExpires > Date.now()){
+    return res.status(200).end()
+  }
+
+  res.status(400).json({
+    success: false,
+    message: 'OTP is invalid or has expired'
+  })
 }
 
 //Admin controllers
@@ -198,6 +252,6 @@ exports.post_reset_password_admin = (req, res, next) => {
 
 }
 
-exports.validate_admin_otp = async (req, res, next) => {
+exports.verify_admin_otp = async (req, res, next) => {
 
 }
