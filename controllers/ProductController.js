@@ -3,13 +3,6 @@ const logger = require('../utils/logger')
 
 // GET controller
 exports.get_product = (req, res, next) => {
-  if (!req.user) {
-    logger.info('token is missing')
-    return res.status(401).json({
-      error: 'token missing or invalid'
-    })
-  }
-
   let ID = req.params.id
   Product.findById(ID).then(product => {
     res.status(200).json(product)

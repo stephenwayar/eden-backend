@@ -12,7 +12,7 @@ const userExtractor = (request, response, next) => {
     return result
   })
 
-  if(!decodedToken){
+  if(decodedToken === null){
     logger.info('token present but invalid')
     return response.status(401).json({
       error: 'token missing or invalid'
