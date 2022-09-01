@@ -28,7 +28,7 @@ exports.post_login_user = async (req, res, next) => {
   const token = jwt.sign(
     userForToken,
     process.env.SECRET,
-    { expiresIn: 60 * 60 }
+    { expiresIn: '1h' }
   )
 
   res.status(200).send({
@@ -85,16 +85,35 @@ exports.post_register_user = async (req, res, next) => {
   })
 }
 
-exports.post_forgot_password_user = async (req, res, next) => {
+exports.post_forgot_password_user = async (req, res) => {
+  const user = await User.findOne({ email: req.body.email })
 
+  if(!user){
+    return res.status(404).json({
+      success: false,
+      message: 'Sorry, user does not exist in our records'
+    })
+  }
+
+  setTimeout(() => {
+    res.status(200).end()
+  }, 3000)
 }
 
 exports.post_reset_password_user = async (req, res, next) => {
+  setTimeout(() => {
+    res.status(200).end()
+  }, 3000)
+}
 
+exports.validate_user_otp = async (req, res, next) => {
+  setTimeout(() => {
+    res.status(200).end()
+  }, 3000)
 }
 
 //Admin controllers
-exports.post_login_admin = async (req, res, next) => {
+exports.post_login_admin = async (req, res) => {
   const { email, password } = req.body
 
   const admin = await Admin.findOne({ email })
@@ -176,5 +195,9 @@ exports.post_forgot_password_admin = (req, res, next) => {
 }
 
 exports.post_reset_password_admin = (req, res, next) => {
+
+}
+
+exports.validate_admin_otp = async (req, res, next) => {
 
 }
