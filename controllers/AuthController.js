@@ -3,6 +3,15 @@ const User = require('../models/User')
 const Admin = require('../models/Admin')
 const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
+const nodemailer = require("nodemailer")
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EDEN_SUPPORT_EMAIL,
+    pass: process.env.MAIL_PASSWORD,
+  },
+})
 
 //User controllers
 exports.post_login_user = async (req, res, next) => {
@@ -101,9 +110,18 @@ exports.post_forgot_password_user = async (req, res) => {
     user.otpToken = token
     user.otpExpires = Date.now() + 3600000
 
-    await user.save()
+    const savedUser = await user.save()
 
-    // code to send otp to email
+    await transporter.sendMail({
+      from: '"Eden Support" ',
+      to: savedUser.email,
+      subject: "Eden Support: OTP Reset Code",
+      html: `
+        <h3>Hello ${savedUser.firstName},</h3> <p>We've recieved a request to reset the password for the Eden account associated with ${savedUser.email}. No changes have been made to your account yet.
+        You can complete the process with the following code:</p <h3><b>[ ${token} ]</b></h3> <p>If you did not make this request, please ignore this email and your password will remain unchanged. We are here to help you at any step of the way.</p>
+        <p>-The Eden team</p>
+      `
+    });
 
     res.status(200).end()
   }catch(exception){
