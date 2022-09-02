@@ -4,6 +4,12 @@ const Admin = require('../models/Admin')
 const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer")
+const {
+  verify_account_mail,
+  account_verified_mail,
+  forgot_password_mail
+} = require('../templates/email')
+const { verification_page } = require('../templates/verification')
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -47,7 +53,8 @@ exports.post_login_user = async (req, res, next) => {
     email: user.email,
     phone_number: user.phone_number,
     shipping_address: user.shipping_address ? user.shipping_address : null,
-    orders: user.orders ? user.orders : null
+    orders: user.orders ? user.orders : null,
+    verified: user.verified
   })
 }
 
@@ -74,7 +81,8 @@ exports.post_register_user = async (req, res, next) => {
     lastName,
     email,
     password,
-    phone_number
+    phone_number,
+    verified: false
   })
 
   bcrypt.genSalt(10, (_err, salt) => {
@@ -84,9 +92,16 @@ exports.post_register_user = async (req, res, next) => {
       newUser.password = hash
 
       try{
-        const savedUser = await newUser.save()
+        await newUser.save()
 
-        res.status(201).json(savedUser)
+        await transporter.sendMail({
+          from: '"Eden Support" ',
+          to: newUser.email,
+          subject: "Verify your Account",
+          html: verify_account_mail(newUser)
+        });
+
+        res.status(201).end()
       } catch(error) {
         next(error)
       }
@@ -115,12 +130,8 @@ exports.post_forgot_password_user = async (req, res) => {
     await transporter.sendMail({
       from: '"Eden Support" ',
       to: savedUser.email,
-      subject: "Eden Support: OTP Reset Code",
-      html: `
-        <h3>Hello ${savedUser.firstName},</h3> <p>We've recieved a request to reset the password for the Eden account associated with ${savedUser.email}. No changes have been made to your account yet.
-        You can complete the process with the following code:</p <h3><b>[ ${token} ]</b></h3> <p>If you did not make this request, please ignore this email and your password will remain unchanged. We are here to help you at any step of the way.</p>
-        <p>-The Eden team</p>
-      `
+      subject: "OTP Reset Code",
+      html: forgot_password_mail(savedUser, token)
     });
 
     res.status(200).end()
@@ -153,6 +164,8 @@ exports.post_reset_password_user = async (req, res, next) => {
       try{
         await user.save()
 
+        // send reset confirmation code goes
+
         res.status(200).end()
       } catch(exception) {
         res.status(400).json({
@@ -182,6 +195,44 @@ exports.verify_user_otp = async (req, res, next) => {
     success: false,
     message: 'OTP is invalid or has expired'
   })
+}
+
+exports.verify_user_account = async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email })
+
+  if(!user){
+    return res.status(404).json({
+      success: false,
+      message: 'Sorry, user does not exist in our records'
+    })
+  }
+
+  if(user.verified){
+    return res.status(200).json({
+      success: false,
+      message: 'Your account is already verified'
+    })
+  }
+
+  try{
+    user.verified = true
+
+    await user.save()
+
+    res.status(200).json({
+      success: true,
+      message: 'Success! email verification complete'
+    })
+  }catch(exception){
+    res.status(400).json({
+      success: false,
+      message: 'Failed to verify account. Please try again'
+    })
+  }
+}
+
+exports.get_verified_success_page = async (req, res) => {
+  res.send(verification_page()).end()
 }
 
 //Admin controllers

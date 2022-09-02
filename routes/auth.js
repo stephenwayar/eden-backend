@@ -13,6 +13,10 @@ Router.post('/api/auth/reset_password/user', AuthController.post_reset_password_
 
 Router.post('/api/auth/verify_otp/user', AuthController.verify_user_otp)
 
+Router.post('/api/auth/verify_user_account', AuthController.verify_user_account)
+
+Router.get('/account/verification/:email', AuthController.get_verified_success_page)
+
 //Admin routes
 Router.post('/api/auth/login/admin', AuthController.post_login_admin)
 

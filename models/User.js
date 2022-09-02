@@ -38,6 +38,10 @@ const UserSchema = new mongoose.Schema({
     ref: 'Order'
   }],
 
+  verified: {
+    type: Boolean
+  },
+
   otpToken: {
     type: Number
   },
