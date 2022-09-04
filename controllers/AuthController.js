@@ -4,10 +4,12 @@ const Admin = require('../models/Admin')
 const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer")
+const { OAuth2Client } = require('google-auth-library')
 const {
   verify_account_mail,
   account_verified_mail,
-  forgot_password_mail
+  paasword_reset_success_mail,
+  otp_mail
 } = require('../templates/email')
 const { verification_page } = require('../templates/verification')
 
@@ -131,8 +133,8 @@ exports.post_forgot_password_user = async (req, res) => {
       from: '"Eden Support" ',
       to: savedUser.email,
       subject: "OTP Reset Code",
-      html: forgot_password_mail(savedUser, token)
-    });
+      html: otp_mail(savedUser, token)
+    })
 
     res.status(200).end()
   }catch(exception){
@@ -162,9 +164,14 @@ exports.post_reset_password_user = async (req, res, next) => {
       user.otpExpires = null
 
       try{
-        await user.save()
+        const savedUser = await user.save()
 
-        // send reset confirmation code goes
+        await transporter.sendMail({
+          from: '"Eden Support" ',
+          to: savedUser.email,
+          subject: "CONFIRMATION: Password Reset",
+          html: paasword_reset_success_mail(savedUser)
+        })
 
         res.status(200).end()
       } catch(exception) {
@@ -217,7 +224,14 @@ exports.verify_user_account = async (req, res, next) => {
   try{
     user.verified = true
 
-    await user.save()
+    const savedUser = await user.save()
+
+    await transporter.sendMail({
+      from: '"Eden Support" ',
+      to: savedUser.email,
+      subject: "CONFIRMATION: Account Verified!",
+      html: account_verified_mail(savedUser)
+    })
 
     res.status(200).json({
       success: true,
@@ -231,8 +245,35 @@ exports.verify_user_account = async (req, res, next) => {
   }
 }
 
-exports.get_verified_success_page = async (req, res) => {
+exports.get_verification_page = async (req, res) => {
   res.send(verification_page()).end()
+}
+
+exports.auth_with_google = async (req, res) => {
+  const idToken = req.body.idToken
+  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+  try{
+    const ticket = await client.verifyIdToken({
+      idToken: idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    })
+
+    const user = ticket.getPayload()
+
+    console.log('User details: ', user)
+
+    // if user.email is in db, sign them in with jwt and send back accesstoken and if not create  an account for user then sign them with jwt and send back accesstoken
+
+    res.status(200).json(user)
+  }catch(exception){
+    console.log('Error: ', exception)
+
+    res.status(400).json({
+      success: false,
+      message: 'Failed to signin with Google'
+    });
+  }
 }
 
 //Admin controllers

@@ -15,7 +15,9 @@ Router.post('/api/auth/verify_otp/user', AuthController.verify_user_otp)
 
 Router.post('/api/auth/verify_user_account', AuthController.verify_user_account)
 
-Router.get('/account/verification/:email', AuthController.get_verified_success_page)
+Router.get('/account/verification/:email', AuthController.get_verification_page)
+
+Router.post('/api/auth/with_google', AuthController.auth_with_google)
 
 //Admin routes
 Router.post('/api/auth/login/admin', AuthController.post_login_admin)
