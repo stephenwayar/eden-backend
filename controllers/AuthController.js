@@ -10,8 +10,8 @@ const {
   account_verified_mail,
   paasword_reset_success_mail,
   otp_mail
-} = require('../templates/email')
-const { verification_page } = require('../templates/verification')
+} = require('../templates/emails')
+const { verification_page } = require('../templates/pages')
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -30,7 +30,6 @@ exports.post_login_user = async (req, res, next) => {
   const passwordIsCorrect = user ? await bcrypt.compare(password, user.password) : false
 
   if(!(user && passwordIsCorrect)){
-    logger.info(user, passwordIsCorrect)
     return res.status(401).json({
       success: false,
       message: "Email or password is incorrect"
@@ -285,7 +284,6 @@ exports.post_login_admin = async (req, res) => {
   const passwordIsCorrect = admin ? await bcrypt.compare(password, admin.password) : false
 
   if(!(admin && passwordIsCorrect)){
-    logger.info(admin, passwordIsCorrect)
     return res.status(401).json({
       success: false,
       message: "Email or password is incorrect"
