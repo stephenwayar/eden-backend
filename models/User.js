@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema({
 
   lastName: {
     type: String,
-    required: true
   },
 
   email: {
@@ -37,11 +36,26 @@ const UserSchema = new mongoose.Schema({
     type: String,
     ref: 'Order'
   }],
-})
+
+  verified: {
+    type: Boolean
+  },
+
+  otpToken: {
+    type: Number
+  },
+
+  otpExpires: {
+    type: Date
+  }
+}, { timestamps: true })
 
 UserSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     delete returnedObject.__v
+    delete returnedObject.password
+    delete returnedObject.otpToken
+    delete returnedObject.otpExpires
   }
 })
 

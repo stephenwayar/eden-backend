@@ -20,12 +20,23 @@ const AdminSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+
+  otpToken: {
+    type: Number
+  },
+
+  otpExpires: {
+    type: Date
   }
-})
+}, { timestamps: true })
 
 AdminSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     delete returnedObject.__v
+    delete returnedObject.password
+    delete returnedObject.otpToken
+    delete returnedObject.otpExpires
   }
 })
 
