@@ -1,15 +1,14 @@
 const bcrypt = require("bcryptjs")
 const User = require('../models/User')
 const Admin = require('../models/Admin')
-const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer")
-const { OAuth2Client } = require('google-auth-library')
 const {
   verify_account_mail,
   account_verified_mail,
   paasword_reset_success_mail,
-  otp_mail
+  otp_mail,
+  generated_password_mail
 } = require('../templates/emails')
 const { verification_page } = require('../templates/pages')
 
@@ -22,7 +21,7 @@ let transporter = nodemailer.createTransport({
 })
 
 //User controllers
-exports.post_login_user = async (req, res, next) => {
+exports.post_login_user = async (req, res) => {
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
@@ -59,7 +58,7 @@ exports.post_login_user = async (req, res, next) => {
   })
 }
 
-exports.post_register_user = async (req, res, next) => {
+exports.post_register_user = async (req, res) => {
   const {
     firstName,
     lastName,
@@ -144,7 +143,7 @@ exports.post_forgot_password_user = async (req, res) => {
   }
 }
 
-exports.post_reset_password_user = async (req, res, next) => {
+exports.post_reset_password_user = async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
 
   if(!user){
@@ -183,7 +182,7 @@ exports.post_reset_password_user = async (req, res, next) => {
   })
 }
 
-exports.verify_user_otp = async (req, res, next) => {
+exports.verify_user_otp = async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
 
   if(!user){
@@ -203,7 +202,7 @@ exports.verify_user_otp = async (req, res, next) => {
   })
 }
 
-exports.verify_user_account = async (req, res, next) => {
+exports.verify_user_account = async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
 
   if(!user){
@@ -244,34 +243,92 @@ exports.verify_user_account = async (req, res, next) => {
   }
 }
 
-exports.get_verification_page = async (req, res) => {
+exports.get_verification_page = async (_req, res) => {
   res.send(verification_page()).end()
 }
 
 exports.auth_with_google = async (req, res) => {
-  const idToken = req.body.idToken
-  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  const { firstName, lastName, email } = req.body
 
-  try{
-    const ticket = await client.verifyIdToken({
-      idToken: idToken,
-      audience: process.env.GOOGLE_CLIENT_ID,
+  const user = await User.findOne({ email })
+
+  if(user){
+    const userForToken = {
+      email: user.email,
+      id: user._id,
+    }
+
+    const token = jwt.sign(
+      userForToken,
+      process.env.SECRET,
+      { expiresIn: '1h' }
+    )
+
+    res.status(200).send({
+      token,
+      firstName: user.firstName,
+      lastName: user.lastName ? user.lastName : null,
+      email: user.email,
+      phone_number: user.phone_number ? user.phone_number : null,
+      shipping_address: user.shipping_address ? user.shipping_address : null,
+      orders: user.orders ? user.orders : null,
+      verified: user.verified
+    })
+  }else{
+    const password = Math.random().toString(36).slice(-10);
+
+    const user = new User({
+      firstName,
+      lastName: lastName ? lastName : null,
+      email,
+      password,
+      phone_number: null,
+      verified: true
     })
 
-    const user = ticket.getPayload()
+    bcrypt.genSalt(10, (_err, salt) => {
+      bcrypt.hash(user.password, salt, async (err, hash) => {
+        if (err) throw err
 
-    console.log('User details: ', user)
+        user.password = hash
 
-    // if user.email is in db, sign them in with jwt and send back accesstoken and if not create  an account for user then sign them with jwt and send back accesstoken
+        try{
+          const newUser = await user.save()
 
-    res.status(200).json(user)
-  }catch(exception){
-    console.log('Error: ', exception)
+          await transporter.sendMail({
+            from: '"Eden Support" ',
+            to: newUser.email,
+            subject: "Account created",
+            html: generated_password_mail(newUser, password)
+          });
 
-    res.status(400).json({
-      success: false,
-      message: 'Failed to signin with Google'
-    });
+          const userForToken = {
+            email: newUser.email,
+            id: newUser._id,
+          }
+
+          const token = jwt.sign(
+            userForToken,
+            process.env.SECRET,
+            { expiresIn: '1h' }
+          )
+
+          res.status(200).send({
+            token,
+            firstName: user.firstName,
+            lastName: user.lastName ? user.lastName : null,
+            email: user.email,
+            phone_number: user.phone_number ? user.phone_number : null,
+            shipping_address: user.shipping_address ? user.shipping_address : null,
+            orders: user.orders ? user.orders : null,
+            verified: user.verified
+          })
+        }catch(exception){
+          console.log(exception)
+          res.status(424).end()
+        }
+      })
+    })
   }
 }
 
@@ -310,7 +367,7 @@ exports.post_login_admin = async (req, res) => {
   })
 }
 
-exports.post_register_admin = async (req, res, next) => {
+exports.post_register_admin = async (req, res) => {
   const {
     firstName,
     lastName,
@@ -352,14 +409,14 @@ exports.post_register_admin = async (req, res, next) => {
   })
 }
 
-exports.post_forgot_password_admin = (req, res, next) => {
+exports.post_forgot_password_admin = (req, res) => {
 
 }
 
-exports.post_reset_password_admin = (req, res, next) => {
+exports.post_reset_password_admin = (req, res) => {
 
 }
 
-exports.verify_admin_otp = async (req, res, next) => {
+exports.verify_admin_otp = async (req, res) => {
 
 }

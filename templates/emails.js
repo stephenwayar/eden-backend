@@ -438,9 +438,18 @@ const otp_mail = (savedUser, token) => {
   )
 }
 
+const generated_password_mail = (savedUser, password) => {
+  return(
+    `
+    <h1>New password generated: ${password}</h1>
+    `
+  )
+}
+
 module.exports = {
   verify_account_mail,
   account_verified_mail,
   paasword_reset_success_mail,
-  otp_mail
+  otp_mail,
+  generated_password_mail
 }
