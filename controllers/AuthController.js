@@ -7,8 +7,7 @@ const {
   verify_account_mail,
   account_verified_mail,
   paasword_reset_success_mail,
-  otp_mail,
-  generated_password_mail
+  otp_mail
 } = require('../templates/emails')
 const { verification_page } = require('../templates/pages')
 
@@ -294,13 +293,6 @@ exports.auth_with_google = async (req, res) => {
 
         try{
           const newUser = await user.save()
-
-          await transporter.sendMail({
-            from: '"Eden Support" ',
-            to: newUser.email,
-            subject: "Account created",
-            html: generated_password_mail(newUser, password)
-          });
 
           const userForToken = {
             email: newUser.email,
