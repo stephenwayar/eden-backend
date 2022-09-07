@@ -1,9 +1,14 @@
 const mongoose = require('mongoose')
 
 const ProductSchema = new mongoose.Schema({
-  img_URL: {
+  no_of_orders: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'OrderItem'
+  }],
+
+  img_URL: [{
     type: String
-  },
+  }],
 
   name: {
     type: String,
@@ -12,33 +17,56 @@ const ProductSchema = new mongoose.Schema({
 
   description: {
     type: String,
-    maxlength: 80
+    maxlength: 100
   },
 
   price: {
-    type: Number
+    type: Object,
+    enum: [
+      {
+        xs: Number,
+        sm: Number,
+        md: Number,
+        lg: Number,
+        xl: Number,
+        _2xl: Number,
+        _3xl: Number
+      },
+
+      {
+        value: {
+          type: Map,
+          of: Number
+        }
+      }
+    ]
   },
 
   quantity: {
-    type: Number,
-    minlength: 1
+    type: Object,
+    enum: [
+      {
+        xs: Number,
+        sm: Number,
+        md: Number,
+        lg: Number,
+        xl: Number,
+        _2xl: Number,
+        _3xl: Number
+      },
+
+      {
+        value: {
+          type: Map,
+          of: Number
+        }
+      }
+    ]
   },
 
   tag: {
     type: String,
-    enum: [
-      'men_clothe',
-      'men_shoe',
-      'men_accessory',
-      'men_underwear',
-      'women_clothe',
-      'women_shoe',
-      'women_accessory',
-      'women_underwear',
-      'kids_toys',
-      'kids_pink',
-      'kids_blue'
-    ]
+    ref: 'Tag'
   },
 })
 

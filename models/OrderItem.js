@@ -1,16 +1,57 @@
 const mongoose = require('mongoose')
 
 const OrderItemSchema = new mongoose.Schema({
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+
   product: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Product'
+  },
+
+  status: {
+    type: String,
+    enum: [
+      'placed',
+      'confirmed',
+      'outForDelivery',
+      'completed',
+      'canceled'
+    ]
+  },
+
+  size: {
+    type: Object,
+    enum: {
+      variation: {
+        enum: [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "_2xl",
+          "_3xl"
+        ]
+      },
+
+      variation: {
+        type: Number
+      }
+    }
+  },
+
+  date_placed: {
+    type: Date
   },
 
   quantity: {
     type: Number
   },
 
-  price: {
+  total_price: {
     type: Number
   }
 })

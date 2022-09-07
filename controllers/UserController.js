@@ -59,7 +59,7 @@ exports.update_user_details = function(req, res, next){
   })
 }
 
-exports.delete_user = function(req, res, next){
+exports.delete_account = function(req, res, next){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({

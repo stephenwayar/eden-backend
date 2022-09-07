@@ -1,30 +1,27 @@
 const mongoose = require('mongoose')
 
 const OrderSchema = new mongoose.Schema({
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+
+  order_items: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'OrderItem'
+  }],
+
   status: {
     type: String,
     enum: [
       'placed',
-      'confirmed',
-      'outForDelivery',
-      'completed',
-      'canceled'
+      'processed'
     ]
   },
 
-  customer: {
-    type: String,
-    ref: 'User'
-  },
-
-  order_item: [{
-    type: String,
-    ref: 'OrderItem'
-  }],
-
-  date: {
+  date_placed: {
     type: Date
-  }
+  },
 })
 
 OrderSchema.set('toJSON', {

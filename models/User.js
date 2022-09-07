@@ -33,8 +33,8 @@ const UserSchema = new mongoose.Schema({
   },
 
   orders: [{
-    type: String,
-    ref: 'Order'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'OrderItem'
   }],
 
   verified: {
