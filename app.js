@@ -20,7 +20,9 @@ const { tokenExtractor } = require('./middlewares/tokenExtractor')
 const { userExtractor } = require('./middlewares/userExtractor')
 
 app.use(cors())
-app.use(express.json())
+app.use(express.json({
+  limit: '100mb'
+}))
 app.use(express.static('build'))
 app.use(morgan('tiny'))
 
