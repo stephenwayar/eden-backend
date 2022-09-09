@@ -7,7 +7,7 @@ const ProductSchema = new mongoose.Schema({
   }],
 
   img_URL: [{
-    type: String
+    type: Object
   }],
 
   name: {

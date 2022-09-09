@@ -1,5 +1,6 @@
 const User = require("../models/User")
 const logger = require('../utils/logger')
+const uploadUserAvatar = require('../helpers/uploadUserAvatar')
 
 exports.get_users = function(req, res, next){
   if (!req.user) {
@@ -14,7 +15,7 @@ exports.get_users = function(req, res, next){
   }).catch(error => next(error))
 }
 
-exports.get_user = function(req, res, next){
+exports.get_user = function(req, res){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -34,7 +35,7 @@ exports.get_user = function(req, res, next){
   })
 }
 
-exports.update_user_details = function(req, res, next){
+exports.update_user_details = function(req, res){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -59,7 +60,7 @@ exports.update_user_details = function(req, res, next){
   })
 }
 
-exports.delete_account = function(req, res, next){
+exports.delete_account = function(req, res){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({

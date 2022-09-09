@@ -1,6 +1,7 @@
 const Product = require('../models/Product')
 const Tag = require('../models/Tag')
 const logger = require('../utils/logger')
+const uploadProductImg = require('../helpers/uploadProductImg')
 
 // toys controllers
 exports.get_kids_toys = async (_req, res, next) => {
@@ -24,25 +25,29 @@ exports.add_kids_toys = async (req, res) => {
   }
 
   const body = req.body
+  const images = body.images //array
   const name = 'kids_toys'
   const tag = await Tag.findOne({ name })
 
   if(tag){
-    const product = new Product({
-      img_URL: body.img_URL,
-      name: body.name,
-      description: body.description,
-      price: body.price,
-      quantity: body.quantity,
-      tag: tag.name
-    })
-
     try{
+      const img = await uploadProductImg(images)
+
+      const product = new Product({
+        img_URL: img,
+        name: body.name,
+        description: body.description,
+        price: body.price, //object
+        quantity: body.quantity, //object
+        tag: tag.name
+      })
+
       const savedProduct = await product.save()
 
       res.status(200).json(savedProduct)
     }catch(error){
       logger.error('Failed to add kids_toys', error)
+
       res.status(400).json({
         success: false,
         message: 'There was an error adding product'
@@ -54,8 +59,10 @@ exports.add_kids_toys = async (req, res) => {
     try{
       const savedTag = await newTag.save()
 
+      const img = await uploadProductImg(images)
+
       const product = new Product({
-        img_URL: body.img_URL,
+        img_URL: img,
         name: body.name,
         description: body.description,
         price: body.price,
@@ -166,6 +173,7 @@ exports.get_kids_blue = async (_req, res, next) => {
 exports.add_kids_blue = async (req, res) => {
   if (!req.user) {
     logger.info('token is missing')
+
     return res.status(401).json({
       error: 'token missing or invalid'
     })
@@ -191,6 +199,7 @@ exports.add_kids_blue = async (req, res) => {
       res.status(200).json(savedProduct)
     }catch(error){
       logger.error('Failed to add kids_blue', error)
+
       res.status(400).json({
         success: false,
         message: 'There was an error adding product'

@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema({
     minlength: 8
   },
 
+  avatar: {
+    type: Object
+  },
+
   shipping_address: {
     type: String,
     maxlength: 20
