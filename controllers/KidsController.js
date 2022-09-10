@@ -24,6 +24,15 @@ exports.add_kids_toys = async (req, res) => {
     })
   }
 
+  const product = await Product.findOne({ name: req.body.name })
+
+  if(product) {
+    return res.status(400).json({
+      success: false,
+      message: `A product with the name '${req.body.name}' already exists`
+    })
+  }
+
   const body = req.body
   const images = body.images //array
   const name = 'kids_toys'
@@ -34,11 +43,11 @@ exports.add_kids_toys = async (req, res) => {
       const img = await uploadProductImg(images)
 
       const product = new Product({
-        img_URL: img,
+        images: img,
         name: body.name,
         description: body.description,
-        price: body.price, //object
-        quantity: body.quantity, //object
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
         tag: tag.name
       })
 
@@ -62,12 +71,12 @@ exports.add_kids_toys = async (req, res) => {
       const img = await uploadProductImg(images)
 
       const product = new Product({
-        img_URL: img,
+        images: img,
         name: body.name,
         description: body.description,
-        price: body.price,
-        quantity: body.quantity,
-        tag: savedTag._id
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: savedTag.name
       })
 
       const savedProduct = await product.save()
@@ -104,26 +113,39 @@ exports.add_kids_pink = async (req, res) => {
     })
   }
 
+  const product = await Product.findOne({ name: req.body.name })
+
+  if(product) {
+    return res.status(400).json({
+      success: false,
+      message: `A product with the name '${req.body.name}' already exists`
+    })
+  }
+
   const body = req.body
+  const images = body.images //array
   const name = 'kids_pink'
   const tag = await Tag.findOne({ name })
 
   if(tag){
-    const product = new Product({
-      img_URL: body.img_URL,
-      name: body.name,
-      description: body.description,
-      price: body.price,
-      quantity: body.quantity,
-      tag: tag.name
-    })
-
     try{
+      const img = await uploadProductImg(images)
+
+      const product = new Product({
+        images: img,
+        name: body.name,
+        description: body.description,
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: tag.name
+      })
+
       const savedProduct = await product.save()
 
       res.status(200).json(savedProduct)
     }catch(error){
       logger.error('Failed to add kids_pink', error)
+
       res.status(400).json({
         success: false,
         message: 'There was an error adding product'
@@ -135,13 +157,15 @@ exports.add_kids_pink = async (req, res) => {
     try{
       const savedTag = await newTag.save()
 
+      const img = await uploadProductImg(images)
+
       const product = new Product({
-        img_URL: body.img_URL,
+        images: img,
         name: body.name,
         description: body.description,
-        price: body.price,
-        quantity: body.quantity,
-        tag: savedTag._id
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: savedTag.name
       })
 
       const savedProduct = await product.save()
@@ -179,21 +203,33 @@ exports.add_kids_blue = async (req, res) => {
     })
   }
 
+  const product = await Product.findOne({ name: req.body.name })
+
+  if(product) {
+    return res.status(400).json({
+      success: false,
+      message: `A product with the name '${req.body.name}' already exists`
+    })
+  }
+
   const body = req.body
+  const images = body.images //array
   const name = 'kids_blue'
   const tag = await Tag.findOne({ name })
 
   if(tag){
-    const product = new Product({
-      img_URL: body.img_URL,
-      name: body.name,
-      description: body.description,
-      price: body.price,
-      quantity: body.quantity,
-      tag: tag.name
-    })
-
     try{
+      const img = await uploadProductImg(images)
+
+      const product = new Product({
+        images: img,
+        name: body.name,
+        description: body.description,
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: tag.name
+      })
+
       const savedProduct = await product.save()
 
       res.status(200).json(savedProduct)
@@ -211,13 +247,15 @@ exports.add_kids_blue = async (req, res) => {
     try{
       const savedTag = await newTag.save()
 
+      const img = await uploadProductImg(images)
+
       const product = new Product({
-        img_URL: body.img_URL,
+        images: img,
         name: body.name,
         description: body.description,
-        price: body.price,
-        quantity: body.quantity,
-        tag: savedTag._id
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: savedTag.name
       })
 
       const savedProduct = await product.save()

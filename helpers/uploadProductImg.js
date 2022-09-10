@@ -4,24 +4,23 @@ const logger = require('../utils/logger')
 const uploadProductImg = async (imgArr) => {
   let images = []
 
-  await imgArr.forEach(async img => {
-    try{
-      const uploadedFile = await cloudinary.uploader.upload(img, {
-        upload_preset: 'eden/products'
+  try{
+    const promiseArr = await imgArr.map(async (img) => {
+      const { public_id, url } = await cloudinary.uploader.upload(img, {
+          upload_preset: 'eden',
+          folder: 'products'
       })
+      
+      return { public_id, url }
+    })
+    
+    images = await Promise.all(promiseArr)
 
-      images.concat({
-        public_id: uploadedFile.public_id,
-        url: uploadedFile.url
-      })
-    }catch(error){
-      logger.error('Failed to upload image')
-
-      if(error) throw error
-    }
-  });
-
-  return images
+    return images
+  } catch(error) {
+    logger.error('Failed to upload image: ', error)
+    throw new Error(error)
+  }
 }
 
 module.exports = uploadProductImg

@@ -6,7 +6,7 @@ const ProductSchema = new mongoose.Schema({
     ref: 'OrderItem'
   }],
 
-  img_URL: [{
+  images: [{
     type: Object
   }],
 
@@ -33,12 +33,12 @@ const ProductSchema = new mongoose.Schema({
         _3xl: Number
       },
 
-      {
+      [{
         value: {
           type: Map,
           of: Number
         }
-      }
+      }]
     ]
   },
 
@@ -55,12 +55,12 @@ const ProductSchema = new mongoose.Schema({
         _3xl: Number
       },
 
-      {
+      [{
         value: {
           type: Map,
           of: Number
         }
-      }
+      }]
     ]
   },
 

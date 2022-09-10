@@ -11,7 +11,7 @@ const uploadUserAvatar = async (file) => {
       url: uploadedImg.url
     }
   }catch(error){
-    if(error) throw error
+    throw new Error(error)
   }
 }
 
