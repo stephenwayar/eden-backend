@@ -51,6 +51,7 @@ exports.post_login_user = async (req, res) => {
     lastName: user.lastName,
     email: user.email,
     phone_number: user.phone_number,
+    avatar: user.avatar ? user.avatar : null,
     shipping_address: user.shipping_address ? user.shipping_address : null,
     orders: user.orders ? user.orders : null,
     verified: user.verified
@@ -269,6 +270,7 @@ exports.auth_with_google = async (req, res) => {
       lastName: user.lastName ? user.lastName : null,
       email: user.email,
       phone_number: user.phone_number ? user.phone_number : null,
+      avatar: user.avatar ? user.avatar : null,
       shipping_address: user.shipping_address ? user.shipping_address : null,
       orders: user.orders ? user.orders : null,
       verified: user.verified

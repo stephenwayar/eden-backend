@@ -11,7 +11,7 @@ exports.upload_avatar = async function(req, res){
     })
   }
 
-  const fileStr = req.body.avatar_str
+  const fileStr = req.body.avatarStr
   const email = req.body.email
   const user = await User.findOne({ email })
 

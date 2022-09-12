@@ -9,7 +9,7 @@ const deleteImage = async (img) => {
   }catch(error){
     logger.error('Failed to delete image')
 
-    if(error) throw error
+    throw new Error(error)
   }
 }
 
