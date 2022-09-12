@@ -14,12 +14,15 @@ const womenRoute = require('./routes/women')
 const kidsRoute = require('./routes/kids')
 const productsRoute = require('./routes/products')
 const ordersRoute = require('./routes/orders')
+const mediaRoute = require('./routes/media')
 const { unknownEndpoint, errorHandler } = require('./middlewares/error')
 const { tokenExtractor } = require('./middlewares/tokenExtractor')
 const { userExtractor } = require('./middlewares/userExtractor')
 
 app.use(cors())
-app.use(express.json())
+app.use(express.json({
+  limit: '100mb'
+}))
 app.use(express.static('build'))
 app.use(morgan('tiny'))
 
@@ -34,6 +37,7 @@ app.use(userExtractor, womenRoute)
 app.use(userExtractor, kidsRoute)
 app.use(userExtractor, ordersRoute)
 app.use(userExtractor, productsRoute)
+app.use(userExtractor, mediaRoute)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)

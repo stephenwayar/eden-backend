@@ -1,15 +1,22 @@
 const Product = require('../models/Product')
+const Tag = require('../models/Tag')
 const logger = require('../utils/logger')
+const uploadProductImg = require('../helpers/uploadProductImg')
 
 // toys controllers
-exports.get_kids_toys = (req, res, next) => {
-  let TAG = 'kids_toys'
-  Product.find({ tag: TAG }).then(products => {
+exports.get_kids_toys = async (_req, res, next) => {
+  const tag = 'kids_toys'
+
+  try{
+    const products = await Product.find({ tag })
+
     res.status(200).json(products)
-  }).catch(error => next(error))
+  }catch(error){
+    next(error)
+  }
 }
 
-exports.add_kids_toys = (req, res, next) => {
+exports.add_kids_toys = async (req, res) => {
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -17,37 +24,88 @@ exports.add_kids_toys = (req, res, next) => {
     })
   }
 
-  let body = req.body
-  let TAG = 'kids_toys'
-  let product = new Product({
-    img_URL: body.img_URL,
-    name: body.name,
-    description: body.description,
-    price: body.price,
-    quantity: body.quantity,
-    tag: TAG
-  })
-  product.save().then(product => {
-    logger.info("Kids toy saved!")
-    res.status(200).json(product)
-  }).catch(error => {
-    logger.error('Error! Kids toy not saved', error)
-    res.status(400).json({
+  const product = await Product.findOne({ name: req.body.name })
+
+  if(product) {
+    return res.status(400).json({
       success: false,
-      message: "Error! Kids toy not saved"
+      message: `A product with the name '${req.body.name}' already exists`
     })
-  })
+  }
+
+  const body = req.body
+  const images = body.images //array
+  const name = 'kids_toys'
+  const tag = await Tag.findOne({ name })
+
+  if(tag){
+    try{
+      const img = await uploadProductImg(images)
+
+      const product = new Product({
+        images: img,
+        name: body.name,
+        description: body.description,
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: tag.name
+      })
+
+      const savedProduct = await product.save()
+
+      res.status(200).json(savedProduct)
+    }catch(error){
+      logger.error('Failed to add kids_toys', error)
+
+      res.status(400).json({
+        success: false,
+        message: 'There was an error adding product'
+      })
+    }
+  }else{
+    const newTag = new Tag({ name })
+
+    try{
+      const savedTag = await newTag.save()
+
+      const img = await uploadProductImg(images)
+
+      const product = new Product({
+        images: img,
+        name: body.name,
+        description: body.description,
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: savedTag.name
+      })
+
+      const savedProduct = await product.save()
+
+      res.status(200).json(savedProduct)
+    }catch(error){
+      logger.error('Failed to add kids_toys', error)
+      res.status(400).json({
+        success: false,
+        message: 'There was an error adding product'
+      })
+    }
+  }
 }
 
 // pink (girls) controllers
-exports.get_kids_pink = (req, res, next) => {
-  let TAG = 'kids_pink'
-  Product.find({ tag: TAG }).then(products => {
+exports.get_kids_pink = async (_req, res, next) => {
+  const tag = 'kids_pink'
+
+  try{
+    const products = await Product.find({ tag })
+
     res.status(200).json(products)
-  }).catch(error => next(error))
+  }catch(error){
+    next(error)
+  }
 }
 
-exports.add_kids_pink = (req, res, next) => {
+exports.add_kids_pink = async (req, res) => {
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -55,62 +113,160 @@ exports.add_kids_pink = (req, res, next) => {
     })
   }
 
-  let body = req.body
-  let TAG = 'kids_pink'
-  let product = new Product({
-    img_URL: body.img_URL,
-    name: body.name,
-    description: body.description,
-    price: body.price,
-    quantity: body.quantity,
-    tag: TAG
-  })
-  product.save().then(product => {
-    logger.info("Kids girl wear saved!")
-    res.status(200).json(product)
-  }).catch(error => {
-    logger.error('Error! girl wear not saved', error)
-    res.status(400).json({
+  const product = await Product.findOne({ name: req.body.name })
+
+  if(product) {
+    return res.status(400).json({
       success: false,
-      message: "Error! girl wear not saved"
+      message: `A product with the name '${req.body.name}' already exists`
     })
-  })
+  }
+
+  const body = req.body
+  const images = body.images //array
+  const name = 'kids_pink'
+  const tag = await Tag.findOne({ name })
+
+  if(tag){
+    try{
+      const img = await uploadProductImg(images)
+
+      const product = new Product({
+        images: img,
+        name: body.name,
+        description: body.description,
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: tag.name
+      })
+
+      const savedProduct = await product.save()
+
+      res.status(200).json(savedProduct)
+    }catch(error){
+      logger.error('Failed to add kids_pink', error)
+
+      res.status(400).json({
+        success: false,
+        message: 'There was an error adding product'
+      })
+    }
+  }else{
+    const newTag = new Tag({ name })
+
+    try{
+      const savedTag = await newTag.save()
+
+      const img = await uploadProductImg(images)
+
+      const product = new Product({
+        images: img,
+        name: body.name,
+        description: body.description,
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: savedTag.name
+      })
+
+      const savedProduct = await product.save()
+
+      res.status(200).json(savedProduct)
+    }catch(error){
+      logger.error('Failed to add kids_pink', error)
+      res.status(400).json({
+        success: false,
+        message: 'There was an error adding product'
+      })
+    }
+  }
 }
 
 // blue (boys) controllers
-exports.get_kids_blue = (req, res, next) => {
-  let TAG = 'kids_blue'
-  Product.find({ tag: TAG }).then(products => {
+exports.get_kids_blue = async (_req, res, next) => {
+  const tag = 'kids_blue'
+
+  try{
+    const products = await Product.find({ tag })
+
     res.status(200).json(products)
-  }).catch(error => next(error))
+  }catch(error){
+    next(error)
+  }
 }
 
-exports.add_kids_blue = (req, res, next) => {
+exports.add_kids_blue = async (req, res) => {
   if (!req.user) {
     logger.info('token is missing')
+
     return res.status(401).json({
       error: 'token missing or invalid'
     })
   }
 
-  let body = req.body
-  let TAG = 'kids_blue'
-  let product = new Product({
-    img_URL: body.img_URL,
-    name: body.name,
-    description: body.description,
-    price: body.price,
-    quantity: body.quantity,
-    tag: TAG
-  })
-  product.save().then(product => {
-    logger.info("Kids boy wear saved!")
-    res.status(200).json(product)
-  }).catch(error => {
-    logger.error('Error! boy wear not saved', error)
-    res.status(400).json({
+  const product = await Product.findOne({ name: req.body.name })
+
+  if(product) {
+    return res.status(400).json({
       success: false,
-      message: "Error! boy wear not saved"
+      message: `A product with the name '${req.body.name}' already exists`
     })
-  })
+  }
+
+  const body = req.body
+  const images = body.images //array
+  const name = 'kids_blue'
+  const tag = await Tag.findOne({ name })
+
+  if(tag){
+    try{
+      const img = await uploadProductImg(images)
+
+      const product = new Product({
+        images: img,
+        name: body.name,
+        description: body.description,
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: tag.name
+      })
+
+      const savedProduct = await product.save()
+
+      res.status(200).json(savedProduct)
+    }catch(error){
+      logger.error('Failed to add kids_blue', error)
+
+      res.status(400).json({
+        success: false,
+        message: 'There was an error adding product'
+      })
+    }
+  }else{
+    const newTag = new Tag({ name })
+
+    try{
+      const savedTag = await newTag.save()
+
+      const img = await uploadProductImg(images)
+
+      const product = new Product({
+        images: img,
+        name: body.name,
+        description: body.description,
+        price: body.price, //object or array object
+        quantity: body.quantity, //object or array object
+        tag: savedTag.name
+      })
+
+      const savedProduct = await product.save()
+
+      res.status(200).json(savedProduct)
+    }catch(error){
+      logger.error('Failed to add kids_blue', error)
+      res.status(400).json({
+        success: false,
+        message: 'There was an error adding product'
+      })
+    }
+  }
 }

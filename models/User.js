@@ -27,14 +27,18 @@ const UserSchema = new mongoose.Schema({
     minlength: 8
   },
 
+  avatar: {
+    type: Object
+  },
+
   shipping_address: {
     type: String,
     maxlength: 20
   },
 
   orders: [{
-    type: String,
-    ref: 'Order'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'OrderItem'
   }],
 
   verified: {

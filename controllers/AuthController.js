@@ -7,8 +7,7 @@ const {
   verify_account_mail,
   account_verified_mail,
   paasword_reset_success_mail,
-  otp_mail,
-  generated_password_mail
+  otp_mail
 } = require('../templates/emails')
 const { verification_page } = require('../templates/pages')
 
@@ -52,6 +51,7 @@ exports.post_login_user = async (req, res) => {
     lastName: user.lastName,
     email: user.email,
     phone_number: user.phone_number,
+    avatar: user.avatar ? user.avatar : null,
     shipping_address: user.shipping_address ? user.shipping_address : null,
     orders: user.orders ? user.orders : null,
     verified: user.verified
@@ -270,6 +270,7 @@ exports.auth_with_google = async (req, res) => {
       lastName: user.lastName ? user.lastName : null,
       email: user.email,
       phone_number: user.phone_number ? user.phone_number : null,
+      avatar: user.avatar ? user.avatar : null,
       shipping_address: user.shipping_address ? user.shipping_address : null,
       orders: user.orders ? user.orders : null,
       verified: user.verified
@@ -294,13 +295,6 @@ exports.auth_with_google = async (req, res) => {
 
         try{
           const newUser = await user.save()
-
-          await transporter.sendMail({
-            from: '"Eden Support" ',
-            to: newUser.email,
-            subject: "Account created",
-            html: generated_password_mail(newUser, password)
-          });
 
           const userForToken = {
             email: newUser.email,

@@ -1,5 +1,6 @@
 const User = require("../models/User")
 const logger = require('../utils/logger')
+const uploadUserAvatar = require('../helpers/uploadUserAvatar')
 
 exports.get_users = function(req, res, next){
   if (!req.user) {
@@ -9,12 +10,12 @@ exports.get_users = function(req, res, next){
     })
   }
 
-  User.find({}).then(users => {
+  User.find({}).populate('orders').then(users => {
     res.status(200).json(users)
   }).catch(error => next(error))
 }
 
-exports.get_user = function(req, res, next){
+exports.get_user = function(req, res){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -23,7 +24,7 @@ exports.get_user = function(req, res, next){
   }
 
   let ID = req.params.id
-  User.findById(ID).then(user => {
+  User.findById(ID).populate('orders').then(user => {
     res.status(200).json(user)
   }).catch(() => {
     logger.info('User not found!')
@@ -34,7 +35,7 @@ exports.get_user = function(req, res, next){
   })
 }
 
-exports.update_user_details = function(req, res, next){
+exports.update_user_details = function(req, res){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -43,12 +44,12 @@ exports.update_user_details = function(req, res, next){
   }
 
   let ID = req.params.id
-  let { firstName, lastName, password, phone_number, shipping_address } = req.body
+  let { firstName, lastName, phone_number, shipping_address } = req.body
   User.findByIdAndUpdate(
     ID,
     { firstName, lastName, phone_number, shipping_address },
     { new: true, runValidators: true, context: 'query' }
-    ).then(user => {
+    ).populate('orders').then(user => {
     res.status(200).json(user)
   }).catch(() => {
     logger.info('Failed to update user details!')
@@ -59,7 +60,7 @@ exports.update_user_details = function(req, res, next){
   })
 }
 
-exports.delete_user = function(req, res, next){
+exports.delete_account = function(req, res){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
