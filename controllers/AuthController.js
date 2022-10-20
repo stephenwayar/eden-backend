@@ -54,7 +54,8 @@ exports.post_login_user = async (req, res) => {
     avatar: user.avatar ? user.avatar : null,
     shipping_address: user.shipping_address ? user.shipping_address : null,
     orders: user.orders ? user.orders : null,
-    verified: user.verified
+    verified: user.verified,
+    id: user._id
   })
 }
 
@@ -273,7 +274,8 @@ exports.auth_with_google = async (req, res) => {
       avatar: user.avatar ? user.avatar : null,
       shipping_address: user.shipping_address ? user.shipping_address : null,
       orders: user.orders ? user.orders : null,
-      verified: user.verified
+      verified: user.verified,
+      id: user._id
     })
   }else{
     const password = Math.random().toString(36).slice(-10);
