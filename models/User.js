@@ -32,8 +32,7 @@ const UserSchema = new mongoose.Schema({
   },
 
   shipping_address: {
-    type: String,
-    maxlength: 20
+    type: String
   },
 
   orders: [{

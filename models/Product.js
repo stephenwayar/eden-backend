@@ -23,15 +23,15 @@ const ProductSchema = new mongoose.Schema({
   price: {
     type: Object,
     enum: [
-      {
-        xs: Number,
-        sm: Number,
-        md: Number,
-        lg: Number,
-        xl: Number,
-        _2xl: Number,
-        _3xl: Number
-      },
+      [
+        { xs: Number },
+        { sm: Number },
+        { md: Number },
+        { lg: Number },
+        { xl: Number },
+        { _2xl: Number },
+        { _3xl: Number }
+      ],
 
       [{
         value: {

@@ -54,7 +54,8 @@ exports.post_login_user = async (req, res) => {
     avatar: user.avatar ? user.avatar : null,
     shipping_address: user.shipping_address ? user.shipping_address : null,
     orders: user.orders ? user.orders : null,
-    verified: user.verified
+    verified: user.verified,
+    id: user._id
   })
 }
 
@@ -182,6 +183,50 @@ exports.post_reset_password_user = async (req, res) => {
   })
 }
 
+exports.post_change_password_user = async (req, res, next) => {
+  const { email, currentPassword, newPassword } = req.body
+  const user = await User.findOne({ email })
+
+  if(!user){
+    return res.status(404).json({
+      success: false,
+      message: "Snap! there was a problem somewhere"
+    })
+  }
+
+  const passwordIsCorrect = await bcrypt.compare(currentPassword, user.password)
+
+  if(!passwordIsCorrect){
+    return res.status(401).json({
+      success: false,
+      message: "Your password was incorrect"
+    })
+  }
+
+  bcrypt.genSalt(10, (_err, salt) => {
+    bcrypt.hash(newPassword, salt, async (err, hash) => {
+      if (err) throw err
+
+      user.password = hash
+
+      try{
+        const savedUser = await user.save()
+
+        await transporter.sendMail({
+          from: '"Eden Support" ',
+          to: savedUser.email,
+          subject: "CONFIRMATION: Password Reset",
+          html: paasword_reset_success_mail(savedUser)
+        })
+
+        res.status(201).end()
+      } catch(error) {
+        next(error)
+      }
+    })
+  })  
+}
+
 exports.verify_user_otp = async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
 
@@ -243,7 +288,31 @@ exports.verify_user_account = async (req, res) => {
   }
 }
 
-exports.get_verification_page = async (_req, res) => {
+exports.request_verification = async (req, res, next) => {
+  const user = await User.findOne({ email: req.params.email })
+
+  if(!user){
+    return res.status(404).json({
+      success: false,
+      message: 'Sorry, user does not exist in our records'
+    })
+  }
+
+  try{
+    await transporter.sendMail({
+      from: '"Eden Support" ',
+      to: user.email,
+      subject: "Verify your Account",
+      html: verify_account_mail(user)
+    });
+
+    res.status(201).end()
+  } catch(error) {
+    next(error)
+  }
+}
+
+exports.get_verification_page = (_req, res) => {
   res.send(verification_page()).end()
 }
 
@@ -273,7 +342,8 @@ exports.auth_with_google = async (req, res) => {
       avatar: user.avatar ? user.avatar : null,
       shipping_address: user.shipping_address ? user.shipping_address : null,
       orders: user.orders ? user.orders : null,
-      verified: user.verified
+      verified: user.verified,
+      id: user._id
     })
   }else{
     const password = Math.random().toString(36).slice(-10);
@@ -309,13 +379,14 @@ exports.auth_with_google = async (req, res) => {
 
           res.status(200).send({
             token,
-            firstName: user.firstName,
-            lastName: user.lastName ? user.lastName : null,
-            email: user.email,
-            phone_number: user.phone_number ? user.phone_number : null,
-            shipping_address: user.shipping_address ? user.shipping_address : null,
-            orders: user.orders ? user.orders : null,
-            verified: user.verified
+            firstName: newUser.firstName,
+            lastName: newUser.lastName ? newUser.lastName : null,
+            email: newUser.email,
+            phone_number: newUser.phone_number ? newUser.phone_number : null,
+            shipping_address: newUser.shipping_address ? newUser.shipping_address : null,
+            orders: newUser.orders ? newUser.orders : null,
+            verified: newUser.verified,
+            id: newUser._id
           })
         }catch(exception){
           console.log(exception)

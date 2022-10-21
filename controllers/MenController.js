@@ -1,6 +1,7 @@
 const Product = require('../models/Product')
 const Tag = require('../models/Tag')
 const logger = require('../utils/logger')
+const uploadProductImg = require('../helpers/uploadProductImg')
 
 //clothing controllers
 exports.get_men_clothing = async (_req, res, next) => {

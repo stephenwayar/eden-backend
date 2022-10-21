@@ -169,7 +169,7 @@ const account_verified_mail = (savedUser) => {
                           style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 0; text-align: left;">
                           Hello ${savedUser.firstName}</h1>
 
-                        <p>Your email address is confrimed! Sign into your account to make orders.</p>
+                        <p>Your email address is confirmed! Sign into your account to make orders.</p>
 
                         <div>
                           <button id="btn" type="button"
