@@ -35,7 +35,7 @@ exports.get_user = function(req, res){
   })
 }
 
-exports.update_user_details = function(req, res){
+exports.update_user_details = async function(req, res){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -43,21 +43,27 @@ exports.update_user_details = function(req, res){
     })
   }
 
-  let ID = req.params.id
-  let { firstName, lastName, phone_number, shipping_address } = req.body
-  User.findByIdAndUpdate(
-    ID,
-    { firstName, lastName, phone_number, shipping_address },
-    { new: true, runValidators: true, context: 'query' }
-    ).populate('orders').then(user => {
+  const ID = req.params.id
+  const {
+    firstName, lastName,
+    phone_number, shipping_address
+  } = req.body
+
+  try{
+    const user = await User.findByIdAndUpdate(
+      ID, 
+      { firstName, lastName, phone_number, shipping_address }, 
+      { new: true, runValidators: true, context: 'query' }
+    )
+
     res.status(200).json(user)
-  }).catch(() => {
-    logger.info('Failed to update user details!')
+  }catch(error){
+    logger.error('Failed to update user details', error)
     res.status(400).json({
-      message: "Failed to update user details",
-      success: false
+      success: false,
+      message: 'Failed to update user details'
     })
-  })
+  }
 }
 
 exports.delete_account = function(req, res){
