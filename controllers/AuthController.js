@@ -183,6 +183,50 @@ exports.post_reset_password_user = async (req, res) => {
   })
 }
 
+exports.post_change_password_user = async (req, res, next) => {
+  const { email, currentPassword, newPassword } = req.body
+  const user = await User.findOne({ email })
+
+  if(!user){
+    return res.status(404).json({
+      success: false,
+      message: "Snap! there was a problem somewhere"
+    })
+  }
+
+  const passwordIsCorrect = await bcrypt.compare(currentPassword, user.password)
+
+  if(!passwordIsCorrect){
+    return res.status(401).json({
+      success: false,
+      message: "Your password was incorrect"
+    })
+  }
+
+  bcrypt.genSalt(10, (_err, salt) => {
+    bcrypt.hash(newPassword, salt, async (err, hash) => {
+      if (err) throw err
+
+      user.password = hash
+
+      try{
+        const savedUser = await user.save()
+
+        await transporter.sendMail({
+          from: '"Eden Support" ',
+          to: savedUser.email,
+          subject: "CONFIRMATION: Password Reset",
+          html: paasword_reset_success_mail(savedUser)
+        })
+
+        res.status(201).end()
+      } catch(error) {
+        next(error)
+      }
+    })
+  })  
+}
+
 exports.verify_user_otp = async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
 

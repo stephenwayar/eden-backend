@@ -11,6 +11,8 @@ Router.post('/api/auth/forgot_password/user', AuthController.post_forgot_passwor
 
 Router.post('/api/auth/reset_password/user', AuthController.post_reset_password_user)
 
+Router.post('/api/auth/change_password/user', AuthController.post_change_password_user)
+
 Router.post('/api/auth/verify_otp/user', AuthController.verify_user_otp)
 
 Router.post('/api/auth/verify_user_account', AuthController.verify_user_account)
