@@ -15,7 +15,7 @@ exports.upload_avatar = async function(req, res){
   const email = req.body.email
   const user = await User.findOne({ email })
 
-  if(user.avatar){
+  if(user.avatar?.public_id){
     try{
       await deletedImg(user.avatar)
 
@@ -69,6 +69,13 @@ exports.delete_avatar = async function(req, res){
     logger.info('Unexpected, the user was not found')
     return res.status(404).json({
       error: 'Snap! there was a problem somewhere'
+    })
+  }
+
+  if(user.avatar.public_id === null){
+    logger.info('Unexpected, avatar already deleted')
+    return res.status(404).json({
+      error: 'Unexpected, avatar already deleted'
     })
   }
 
