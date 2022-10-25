@@ -1,6 +1,5 @@
 const User = require("../models/User")
 const logger = require('../utils/logger')
-const uploadUserAvatar = require('../helpers/uploadUserAvatar')
 
 exports.get_users = function(req, res, next){
   if (!req.user) {

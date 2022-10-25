@@ -11,7 +11,7 @@ exports.upload_avatar = async function(req, res){
     })
   }
 
-  const fileStr = req.body.avatarStr
+  const fileStr = req.body.avatarString
   const email = req.body.email
   const user = await User.findOne({ email })
 
@@ -21,30 +21,24 @@ exports.upload_avatar = async function(req, res){
 
       const img = await uploadUserAvatar(fileStr)
 
-      user.avatar = {
-        public_id: img.public_id,
-        url: img.url
-      }
+      user.avatar = img
 
       const savedUser = await user.save()
 
       res.status(200).json(savedUser)
     }catch(error){
-      logger.error('Failed to upload avatar', error)
+      logger.error('Failed to update avatar', error)
 
       res.status(400).json({
         success: false,
-        message: 'Failed to upload avatar'
+        message: 'Failed to update avatar'
       })
     }
   }else{
     try{
       const img = await uploadUserAvatar(fileStr)
 
-      user.avatar = {
-        public_id: img.public_id,
-        url: img.url
-      }
+      user.avatar = img
 
       const savedUser = await user.save()
 

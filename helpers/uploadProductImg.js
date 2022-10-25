@@ -19,6 +19,7 @@ const uploadProductImg = async (imgArr) => {
     return images
   } catch(error) {
     logger.error('Failed to upload image: ', error)
+
     throw new Error(error)
   }
 }
