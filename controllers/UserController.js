@@ -1,5 +1,7 @@
 const User = require("../models/User")
 const logger = require('../utils/logger')
+const bcrypt = require("bcryptjs")
+const deleteAvatar = require('../helpers/deleteImage')
 
 exports.get_users = function(req, res, next){
   if (!req.user) {
@@ -65,7 +67,7 @@ exports.update_user_details = async function(req, res){
   }
 }
 
-exports.delete_account = function(req, res){
+exports.delete_account = async function(req, res){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -73,18 +75,37 @@ exports.delete_account = function(req, res){
     })
   }
 
-  let ID = req.params.id
-  User.findByIdAndDelete(ID).then(() => {
-    logger.info('Successfully deleted user')
-    res.status(200).json({
-      message: "Successfully deleted user",
-      success: true
+  const { id, password } = req.params
+  const user = await User.findById(id)
+
+  if(!user){
+    return res.status(404).json({
+      success: false,
+      message: "Snap! there was a problem somewhere"
     })
-  }).catch(() => {
-    logger.info('User does not exist')
+  }
+
+  const passwordIsCorrect = await bcrypt.compare(password, user.password)
+
+  if(!passwordIsCorrect){
+    return res.status(401).json({
+      success: false,
+      message: "Your password was incorrect"
+    })
+  }
+
+  try{
+    if(user.avatar?.public_id){
+      await deleteAvatar(user.avatar)
+    }
+    const deletedUser = await User.findByIdAndDelete(id)
+
+    res.status(200).json(deletedUser)
+  }catch(error){
+    logger.info('Failed to delete account', error)
     res.status(400).json({
-      message: "User does not exist",
+      message: "Failed to delete account",
       success: false
     })
-  })
+  }
 }
