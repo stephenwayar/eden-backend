@@ -8,6 +8,6 @@ Router.get('/api/users/:id', UserController.get_user)
 
 Router.put('/api/users/:id', UserController.update_user_details)
 
-Router.delete('/api/users/:id', UserController.delete_account)
+Router.delete('/api/users/:id/:password', UserController.delete_account)
 
 module.exports = Router

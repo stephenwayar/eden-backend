@@ -206,7 +206,7 @@ exports.post_change_password_user = async (req, res, next) => {
   bcrypt.genSalt(10, (_err, salt) => {
     bcrypt.hash(newPassword, salt, async (err, hash) => {
       if (err) throw err
-
+7
       user.password = hash
 
       try{

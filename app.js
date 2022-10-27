@@ -5,7 +5,15 @@ const app = express()
 const cors = require('cors')
 const morgan = require('morgan')
 
+require('./models/Admin')
+require('./models/Order')
+require('./models/OrderItem')
+require('./models/Product')
+require('./models/Tag')
+require('./models/User')
+
 require("./database/config")
+
 const indexRoute = require('./routes/index')
 const authRoute = require('./routes/auth')
 const usersRoute = require('./routes/users')

@@ -1,4 +1,5 @@
 const { cloudinary } = require('../utils/cloudinary')
+const logger = require('../utils/logger')
 
 const uploadUserAvatar = async (file) => {
   try{
@@ -11,6 +12,8 @@ const uploadUserAvatar = async (file) => {
       url: uploadedImg.url
     }
   }catch(error){
+    logger.error('Failed to update avatar', error)
+
     throw new Error(error)
   }
 }

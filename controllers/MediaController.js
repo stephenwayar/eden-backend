@@ -11,40 +11,34 @@ exports.upload_avatar = async function(req, res){
     })
   }
 
-  const fileStr = req.body.avatarStr
+  const fileStr = req.body.avatarString
   const email = req.body.email
   const user = await User.findOne({ email })
 
-  if(user.avatar){
+  if(user.avatar?.public_id){
     try{
       await deletedImg(user.avatar)
 
       const img = await uploadUserAvatar(fileStr)
 
-      user.avatar = {
-        public_id: img.public_id,
-        url: img.url
-      }
+      user.avatar = img
 
       const savedUser = await user.save()
 
       res.status(200).json(savedUser)
     }catch(error){
-      logger.error('Failed to upload avatar', error)
+      logger.error('Failed to update avatar', error)
 
       res.status(400).json({
         success: false,
-        message: 'Failed to upload avatar'
+        message: 'Failed to update avatar'
       })
     }
   }else{
     try{
       const img = await uploadUserAvatar(fileStr)
 
-      user.avatar = {
-        public_id: img.public_id,
-        url: img.url
-      }
+      user.avatar = img
 
       const savedUser = await user.save()
 
@@ -75,6 +69,13 @@ exports.delete_avatar = async function(req, res){
     logger.info('Unexpected, the user was not found')
     return res.status(404).json({
       error: 'Snap! there was a problem somewhere'
+    })
+  }
+
+  if(user.avatar.public_id === null){
+    logger.info('Unexpected, avatar already deleted')
+    return res.status(404).json({
+      error: 'Unexpected, avatar already deleted'
     })
   }
 
