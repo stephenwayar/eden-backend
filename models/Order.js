@@ -15,7 +15,10 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     enum: [
       'placed',
-      'processed'
+      'confirmed',
+      'outForDelivery',
+      'completed',
+      'canceled'
     ]
   },
 

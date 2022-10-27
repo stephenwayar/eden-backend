@@ -1,4 +1,3 @@
-const Order = require('../models/OrderItem')
 const logger = require('../utils/logger')
 
 //create controller

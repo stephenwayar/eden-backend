@@ -3,7 +3,7 @@ const logger = require('../utils/logger')
 const bcrypt = require("bcryptjs")
 const deleteAvatar = require('../helpers/deleteImage')
 
-exports.get_users = function(req, res, next){
+exports.get_users = async function(req, res, next){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -11,12 +11,20 @@ exports.get_users = function(req, res, next){
     })
   }
 
-  User.find({}).populate('orders').then(users => {
-    res.status(200).json(users)
-  }).catch(error => next(error))
+  try{
+    const users = await User
+    .find({})
+    .populate('orders')
+    .populate({ path: 'orders.order_items' })
+  
+  res.status(200).json(users)
+  }catch(error){
+    logger.error('Failed to fetch users',error)
+    next(error)
+  }
 }
 
-exports.get_user = function(req, res){
+exports.get_user = async function(req, res){
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -25,15 +33,21 @@ exports.get_user = function(req, res){
   }
 
   let ID = req.params.id
-  User.findById(ID).populate('orders').then(user => {
+
+  try{
+    const user = await User
+      .findById(ID)
+      .populate('orders')
+      .populate({ path: 'orders.order_items' })
+
     res.status(200).json(user)
-  }).catch(() => {
-    logger.info('User not found!')
+  }catch(error){
+    logger.info('User not found!', error)
     res.status(404).json({
       message: "User not found!",
       success: false
     })
-  })
+  }
 }
 
 exports.update_user_details = async function(req, res){
@@ -46,8 +60,10 @@ exports.update_user_details = async function(req, res){
 
   const ID = req.params.id
   const {
-    firstName, lastName,
-    phone_number, shipping_address
+    firstName, 
+    lastName,
+    phone_number, 
+    shipping_address
   } = req.body
 
   try{

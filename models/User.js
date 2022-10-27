@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema({
 
   orders: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'OrderItem'
+    ref: 'Order'
   }],
 
   verified: {
