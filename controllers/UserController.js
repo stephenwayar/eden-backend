@@ -13,11 +13,11 @@ exports.get_users = async function(req, res, next){
 
   try{
     const users = await User
-    .find({})
-    .populate('orders')
-    .populate({ path: 'orders.order_items' })
+      .find({})
+      .populate('orders')
+      .populate({ path: 'orders.order_items' })
   
-  res.status(200).json(users)
+    res.status(200).json(users)
   }catch(error){
     logger.error('Failed to fetch users',error)
     next(error)

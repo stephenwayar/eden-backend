@@ -17,7 +17,6 @@ const OrderItemSchema = new mongoose.Schema({
           "lg",
           "xl",
           "_2xl",
-          "_3xl"
         ]
       },
 

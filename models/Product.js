@@ -52,7 +52,6 @@ const ProductSchema = new mongoose.Schema({
         lg: Number,
         xl: Number,
         _2xl: Number,
-        _3xl: Number
       },
 
       [{
