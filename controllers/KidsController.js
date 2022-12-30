@@ -92,60 +92,29 @@ exports.add_kids_pink = async (req, res) => {
 
   const body = req.body
   const images = body.images //array
-  const name = 'kids_pink'
-  const tag = await Tag.findOne({ name })
+  const tag = 'kids_pink'
 
-  if(tag){
-    try{
-      const img = await uploadProductImg(images)
+  try{
+    const img = await uploadProductImg(images)
 
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: tag.name
-      })
+    const product = new Product({
+      images: img,
+      name: body.name,
+      description: body.description,
+      price: body.price, // array of objects
+      tag
+    })
 
-      const savedProduct = await product.save()
+    const savedProduct = await product.save()
 
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add kids_pink', error)
+    res.status(200).json(savedProduct)
+  }catch(error){
+    logger.error('Failed to add kids_pink', error)
 
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
-  }else{
-    const newTag = new Tag({ name })
-
-    try{
-      const savedTag = await newTag.save()
-
-      const img = await uploadProductImg(images)
-
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: savedTag.name
-      })
-
-      const savedProduct = await product.save()
-
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add kids_pink', error)
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
+    res.status(400).json({
+      success: false,
+      message: 'There was an error adding product'
+    })
   }
 }
 
@@ -182,59 +151,28 @@ exports.add_kids_blue = async (req, res) => {
 
   const body = req.body
   const images = body.images //array
-  const name = 'kids_blue'
-  const tag = await Tag.findOne({ name })
+  const tag = 'kids_blue'
 
-  if(tag){
-    try{
-      const img = await uploadProductImg(images)
+  try{
+    const img = await uploadProductImg(images)
 
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: tag.name
-      })
+    const product = new Product({
+      images: img,
+      name: body.name,
+      description: body.description,
+      price: body.price, // array of objects
+      tag
+    })
 
-      const savedProduct = await product.save()
+    const savedProduct = await product.save()
 
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add kids_blue', error)
+    res.status(200).json(savedProduct)
+  }catch(error){
+    logger.error('Failed to add kids_blue', error)
 
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
-  }else{
-    const newTag = new Tag({ name })
-
-    try{
-      const savedTag = await newTag.save()
-
-      const img = await uploadProductImg(images)
-
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: savedTag.name
-      })
-
-      const savedProduct = await product.save()
-
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add kids_blue', error)
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
+    res.status(400).json({
+      success: false,
+      message: 'There was an error adding product'
+    })
   }
 }
