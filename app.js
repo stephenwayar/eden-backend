@@ -9,7 +9,6 @@ require('./models/Admin')
 require('./models/Order')
 require('./models/OrderItem')
 require('./models/Product')
-require('./models/Tag')
 require('./models/User')
 
 require("./database/config")

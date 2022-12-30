@@ -29,8 +29,7 @@ const ProductSchema = new mongoose.Schema({
         { md: Number },
         { lg: Number },
         { xl: Number },
-        { _2xl: Number },
-        { _3xl: Number }
+        { _2xl: Number }
       ],
 
       [{
@@ -42,31 +41,9 @@ const ProductSchema = new mongoose.Schema({
     ]
   },
 
-  quantity: {
-    type: Object,
-    enum: [
-      {
-        xs: Number,
-        sm: Number,
-        md: Number,
-        lg: Number,
-        xl: Number,
-        _2xl: Number,
-      },
-
-      [{
-        value: {
-          type: Map,
-          of: Number
-        }
-      }]
-    ]
-  },
-
   tag: {
-    type: String,
-    ref: 'Tag'
-  },
+    type: String
+  }
 })
 
 ProductSchema.set('toJSON', {

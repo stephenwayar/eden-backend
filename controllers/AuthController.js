@@ -42,7 +42,7 @@ exports.post_login_user = async (req, res) => {
   const token = jwt.sign(
     userForToken,
     process.env.SECRET,
-    { expiresIn: '1h' }
+    { expiresIn: '1d' }
   )
 
   res.status(200).send({

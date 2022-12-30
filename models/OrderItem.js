@@ -7,23 +7,7 @@ const OrderItemSchema = new mongoose.Schema({
   },
 
   size: {
-    type: Object,
-    enum: {
-      variation: {
-        enum: [
-          "xs",
-          "sm",
-          "md",
-          "lg",
-          "xl",
-          "_2xl",
-        ]
-      },
-
-      variation: {
-        type: Number
-      }
-    }
+    type: String,
   },
 
   quantity: {
