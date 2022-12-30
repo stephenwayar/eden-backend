@@ -36,10 +36,10 @@ exports.update_product = (req, res, next) => {
   }
 
   let ID = req.params.id
-  let { img_URL, name, description, price, quantity, tag } = req.body
+  let { name, description, price } = req.body
   Product.findByIdAndUpdate(
     ID,
-    { img_URL, name, description, price, quantity, tag },
+    { name, description, price },
     { new: true, runValidators: true, context: 'query' }
   ).then(updatedProduct => {
     logger.info('Updated product!')
