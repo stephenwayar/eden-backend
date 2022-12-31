@@ -1,5 +1,4 @@
 const Product = require('../models/Product')
-const Tag = require('../models/Tag')
 const logger = require('../utils/logger')
 const uploadProductImg = require('../helpers/uploadProductImg')
 
@@ -35,60 +34,29 @@ exports.add_men_clothe = async (req, res) => {
 
   const body = req.body
   const images = body.images //array
-  const name = 'men_clothe'
-  const tag = await Tag.findOne({ name })
+  const tag = 'men_clothe'
 
-  if(tag){
-    try{
-      const img = await uploadProductImg(images)
+  try{
+    const img = await uploadProductImg(images)
 
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: tag.name
-      })
+    const product = new Product({
+      images: img,
+      name: body.name,
+      description: body.description,
+      price: body.price, // array of objects
+      tag
+    })
 
-      const savedProduct = await product.save()
+    const savedProduct = await product.save()
 
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add men_clothe', error)
+    res.status(200).json(savedProduct)
+  }catch(error){
+    logger.error('Failed to add men_clothe', error)
 
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
-  }else{
-    const newTag = new Tag({ name })
-
-    try{
-      const savedTag = await newTag.save()
-
-      const img = await uploadProductImg(images)
-
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: savedTag.name
-      })
-
-      const savedProduct = await product.save()
-
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add men_clothe', error)
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
+    res.status(400).json({
+      success: false,
+      message: 'There was an error adding product'
+    })
   }
 }
 
@@ -124,60 +92,29 @@ exports.add_men_shoe = async (req, res) => {
 
   const body = req.body
   const images = body.images //array
-  const name = 'men_shoe'
-  const tag = await Tag.findOne({ name })
+  const tag = 'men_shoe'
 
-  if(tag){
-    try{
-      const img = await uploadProductImg(images)
+  try{
+    const img = await uploadProductImg(images)
 
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: tag.name
-      })
+    const product = new Product({
+      images: img,
+      name: body.name,
+      description: body.description,
+      price: body.price, // array of objects
+      tag
+    })
 
-      const savedProduct = await product.save()
+    const savedProduct = await product.save()
 
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add men_shoe', error)
+    res.status(200).json(savedProduct)
+  }catch(error){
+    logger.error('Failed to add men_shoe', error)
 
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
-  }else{
-    const newTag = new Tag({ name })
-
-    try{
-      const savedTag = await newTag.save()
-
-      const img = await uploadProductImg(images)
-
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: savedTag.name
-      })
-
-      const savedProduct = await product.save()
-
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add men_shoe', error)
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
+    res.status(400).json({
+      success: false,
+      message: 'There was an error adding product'
+    })
   }
 }
 
@@ -213,65 +150,34 @@ exports.add_men_accessory = async (req, res) => {
 
   const body = req.body
   const images = body.images //array
-  const name = 'men_accessory'
-  const tag = await Tag.findOne({ name })
+  const tag = 'men_accessory'
 
-  if(tag){
-    try{
-      const img = await uploadProductImg(images)
+  try{
+    const img = await uploadProductImg(images)
 
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: tag.name
-      })
+    const product = new Product({
+      images: img,
+      name: body.name,
+      description: body.description,
+      price: body.price, // array of objects
+      tag
+    })
 
-      const savedProduct = await product.save()
+    const savedProduct = await product.save()
 
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add men_accessory', error)
+    res.status(200).json(savedProduct)
+  }catch(error){
+    logger.error('Failed to add men_accessory', error)
 
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
-  }else{
-    const newTag = new Tag({ name })
-
-    try{
-      const savedTag = await newTag.save()
-
-      const img = await uploadProductImg(images)
-
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: savedTag.name
-      })
-
-      const savedProduct = await product.save()
-
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add men_accessory', error)
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
+    res.status(400).json({
+      success: false,
+      message: 'There was an error adding product'
+    })
   }
 }
 
 //underwears controllers
-exports.get_men_underwears = async (req, res, next) => {
+exports.get_men_underwears = async (_req, res, next) => {
   let tag = 'men_underwear'
 
   try{
@@ -302,59 +208,28 @@ exports.add_men_underwear = async (req, res) => {
 
   const body = req.body
   const images = body.images //array
-  const name = 'men_underwear'
-  const tag = await Tag.findOne({ name })
+  const tag = 'men_underwear'
 
-  if(tag){
-    try{
-      const img = await uploadProductImg(images)
+  try{
+    const img = await uploadProductImg(images)
 
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: tag.name
-      })
+    const product = new Product({
+      images: img,
+      name: body.name,
+      description: body.description,
+      price: body.price, // array of objects
+      tag
+    })
 
-      const savedProduct = await product.save()
+    const savedProduct = await product.save()
 
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add men_underwear', error)
+    res.status(200).json(savedProduct)
+  }catch(error){
+    logger.error('Failed to add men_underwear', error)
 
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
-  }else{
-    const newTag = new Tag({ name })
-
-    try{
-      const savedTag = await newTag.save()
-
-      const img = await uploadProductImg(images)
-
-      const product = new Product({
-        images: img,
-        name: body.name,
-        description: body.description,
-        price: body.price, //object or array object
-        quantity: body.quantity, //object or array object
-        tag: savedTag.name
-      })
-
-      const savedProduct = await product.save()
-
-      res.status(200).json(savedProduct)
-    }catch(error){
-      logger.error('Failed to add men_underwear', error)
-      res.status(400).json({
-        success: false,
-        message: 'There was an error adding product'
-      })
-    }
+    res.status(400).json({
+      success: false,
+      message: 'There was an error adding product'
+    })
   }
 }

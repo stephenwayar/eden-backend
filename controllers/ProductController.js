@@ -1,5 +1,6 @@
 const Product = require('../models/Product')
 const logger = require('../utils/logger')
+const deleteImage = require('../helpers/deleteImage')
 
 // GET controller
 exports.get_products = (req, res, next) => {
@@ -36,10 +37,10 @@ exports.update_product = (req, res, next) => {
   }
 
   let ID = req.params.id
-  let { img_URL, name, description, price, quantity, tag } = req.body
+  let { name, description, price } = req.body
   Product.findByIdAndUpdate(
     ID,
-    { img_URL, name, description, price, quantity, tag },
+    { name, description, price },
     { new: true, runValidators: true, context: 'query' }
   ).then(updatedProduct => {
     logger.info('Updated product!')
@@ -51,7 +52,7 @@ exports.update_product = (req, res, next) => {
 }
 
 //DELETE controller
-exports.delete_product = (req, res, next) => {
+exports.delete_product = async (req, res, next) => {
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -59,14 +60,32 @@ exports.delete_product = (req, res, next) => {
     })
   }
 
-  let ID = req.params.id
-  Product.findByIdAndDelete(ID).then(() => {
-    res.status(200).end()
-  }).catch(error => {
-    logger.error('Product does not exist or has been deleted!', error)
+  const ID = req.params.id
+  const product = await Product.findById(ID)
+
+  if(product){
+    const images = product.images
+
+    try{
+      images.forEach(async (img) => {
+        await deleteImage(img)
+      })
+
+      await Product.findByIdAndDelete(ID)
+
+      res.status(200).end()
+    }catch(error){
+      logger.error('Failed to delete product!', error)
+      res.status(400).json({
+        success: false,
+        message: 'Failed to delete product! Try again'
+      })
+    }
+  }else{
+    logger.info('Product does not exist or has been deleted!')
     res.status(400).json({
       success: false,
       message: 'Product does not exist or has been deleted!'
     })
-  })
+  }
 }
