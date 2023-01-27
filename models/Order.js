@@ -22,6 +22,26 @@ const OrderSchema = new mongoose.Schema({
     ]
   },
 
+  payment_method: {
+    type: String,
+    enum: [
+      'cod',
+      'online'
+    ]
+  },
+
+  payment_provider: {
+    type: String,
+    enum: [
+      'paystack',
+      'flutterwave'
+    ]
+  },
+
+  paid: {
+    type: Boolean
+  },
+
   date_placed: {
     type: Date
   },
