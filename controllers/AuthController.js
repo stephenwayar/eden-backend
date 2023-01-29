@@ -432,7 +432,7 @@ exports.post_login_admin = async (req, res) => {
   })
 }
 
-exports.post_register_admin = async (req, res) => {
+exports.post_register_admin = async (req, res, next) => {
   const {
     firstName,
     lastName,

@@ -7,8 +7,8 @@ const uploadProductImg = async (imgArr) => {
   try{
     const promiseArr = await imgArr.map(async (img) => {
       const { public_id, url } = await cloudinary.uploader.upload(img, {
-          upload_preset: 'eden',
-          folder: 'products'
+        upload_preset: 'eden',
+        folder: 'products'
       })
       
       return { public_id, url }
