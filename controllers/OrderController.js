@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Order = require('../models/Order')
 const OrderItem = require('../models/OrderItem')
 const User = require('../models/User')
+const Product = require('../models/Product')
 
 //post controller
 exports.place_order = async (req, res, next) => {
@@ -39,6 +40,12 @@ exports.place_order = async (req, res, next) => {
       })
 
       const savedItem = await newOrderItem.save()
+
+      const product = await Product.findById(savedItem.product) // finds the product in an order_item 
+
+      product.no_of_orders = product.no_of_orders.concat(mongoose.Types.ObjectId(savedItem._id)) // adds a saved item's objectId in the no_of_orders array. This is a feature that enables the frontend to filter the best selling products
+
+      product.save() // saves the product
 
       return mongoose.Types.ObjectId(savedItem._id)
     }) // loops through order_items array and saves each order item
