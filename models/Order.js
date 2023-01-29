@@ -26,7 +26,7 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     enum: [
       'cod',
-      'online'
+      'card'
     ]
   },
 
@@ -34,7 +34,8 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     enum: [
       'paystack',
-      'flutterwave'
+      'flutterwave',
+      'cod'
     ]
   },
 
@@ -43,7 +44,7 @@ const OrderSchema = new mongoose.Schema({
   },
 
   date_placed: {
-    type: Date
+    type: String
   },
 })
 
