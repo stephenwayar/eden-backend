@@ -6,7 +6,7 @@ const User = require('../models/User')
 const Product = require('../models/Product')
 
 //post controller
-exports.place_order = async (req, res, next) => {
+exports.place_order = async (req, res) => {
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -94,30 +94,85 @@ exports.place_order = async (req, res, next) => {
 
 //update controller
 exports.update_order = async (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
 
+  const ID = req.params.id
+  const { status } = req.body
+
+  try{
+    const order = await Order.findByIdAndUpdate(
+      ID, 
+      { status }, 
+      { new: true, runValidators: true, context: 'query' }
+    ).populate('customer order_items')
+
+    res.status(200).json(order)
+  }catch(error){
+    logger.error('Failed to update order status', error)
+    res.status(400).json({
+      success: false,
+      message: 'Failed to update order status'
+    })
+  }
 }
 
 //get controller
-exports.get_order = async (req, res, next) => {
+exports.get_order = async (req, res) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
 
+  let ID = req.params.id
+
+  try{
+    const order = await Order
+      .findById(ID)
+      .populate('customer order_items')
+
+    res.status(200).json(order)
+  }catch(error){
+    logger.info('Order not found!', error)
+    res.status(404).json({
+      message: "Order not found!",
+      success: false
+    })
+  }
 }
 
-exports.get_placed_orders = async (req, res, next) => {
+exports.get_orders = async (req, res, next) => {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
 
-}
+  const status = req.body.status
 
-exports.get_confirmed_orders = async (req, res, next) => {
+  if (!status) {
+    logger.info('Order status is required')
+    return res.status(400).json({
+      success: false,
+      message: 'Order status is required'
+    })
+  }
 
-}
-
-exports.get_outfordelivery_orders = async (req, res, next) => {
-
-}
-
-exports.get_completed_orders = async (req, res, next) => {
-
-}
-
-exports.get_canceled_orders = async (req, res, next) => {
-
+  try{
+    const orders = await Order
+      .find({ status })
+      .populate('customer order_items')
+  
+    res.status(200).json(orders)
+  }catch(error){
+    logger.error(`Failed to fetch ${status} orders`,error)
+    next(error)
+  }
 }
