@@ -58,7 +58,10 @@ exports.place_order = async (req, res) => {
       status: 'placed',
       payment_method: body.payment_method,
       payment_provider: body.payment_provider,
+      shipping_fee: body.shipping_fee,
+      amount: body.amount,
       paid: body.paid,
+      reference: body.reference,
       date_placed
     })
 

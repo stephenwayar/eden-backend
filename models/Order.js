@@ -39,8 +39,20 @@ const OrderSchema = new mongoose.Schema({
     ]
   },
 
+  shipping_fee: {
+    type: Number
+  },
+
+  amount: {
+    type: Number
+  },
+
   paid: {
     type: Boolean
+  },
+
+  reference: {
+    type: String
   },
 
   date_placed: {
