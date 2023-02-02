@@ -16,7 +16,7 @@ let transporter = nodemailer.createTransport({
   auth: {
     user: process.env.EDEN_SUPPORT_EMAIL,
     pass: process.env.MAIL_PASSWORD,
-  },
+  }
 })
 
 //User controllers
@@ -44,6 +44,10 @@ exports.post_login_user = async (req, res) => {
     process.env.SECRET,
     { expiresIn: '1d' }
   )
+
+  // await user.populate('orders')
+  // await user.populate({ path: 'orders.order_items' })
+  // await user.populate({ path: 'orders.order_items.product' })
 
   res.status(200).send({
     token,
@@ -330,8 +334,12 @@ exports.auth_with_google = async (req, res) => {
     const token = jwt.sign(
       userForToken,
       process.env.SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '1d' }
     )
+
+    // await user.populate('orders')
+    // await user.populate({ path: 'orders.order_items' })
+    // await user.populate({ path: 'orders.order_items.product' })
 
     res.status(200).send({
       token,
@@ -374,7 +382,7 @@ exports.auth_with_google = async (req, res) => {
           const token = jwt.sign(
             userForToken,
             process.env.SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '1d' }
           )
 
           res.status(200).send({
