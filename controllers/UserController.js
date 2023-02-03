@@ -12,10 +12,9 @@ exports.get_users = async function(req, res, next){
   }
 
   try{
-    const users = await User
-      .find({})
-      .populate('orders')
-      .populate({ path: 'orders.order_items' })
+    let users = await User.find({}).populate('orders')
+    users = await users.populate({ path: 'orders.order_items' })
+    users = await users.populate({ path: 'orders.order_items.product' })
   
     res.status(200).json(users)
   }catch(error){
@@ -35,10 +34,9 @@ exports.get_user = async function(req, res){
   let ID = req.params.id
 
   try{
-    const user = await User
-      .findById(ID)
-      .populate('orders')
-      .populate({ path: 'orders.order_items' })
+    let user = await User.findById(ID).populate('orders')
+    user = await user.populate({ path: 'orders.order_items' })
+    user = await user.populate({ path: 'orders.order_items.product' })
 
     res.status(200).json(user)
   }catch(error){
