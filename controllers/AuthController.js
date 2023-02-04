@@ -37,6 +37,9 @@ exports.post_login_user = async (req, res) => {
   const userForToken = {
     email: user.email,
     id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    phone_number: user.phone_number
   }
 
   const token = jwt.sign(
@@ -329,6 +332,9 @@ exports.auth_with_google = async (req, res) => {
     const userForToken = {
       email: user.email,
       id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phone_number: user.phone_number,
     }
 
     const token = jwt.sign(
@@ -377,6 +383,10 @@ exports.auth_with_google = async (req, res) => {
           const userForToken = {
             email: newUser.email,
             id: newUser._id,
+    
+    firstName: user.firstName,
+    lastName: user.lastName,        phone_number: user.phone_number,
+    
           }
 
           const token = jwt.sign(

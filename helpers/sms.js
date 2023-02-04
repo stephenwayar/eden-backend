@@ -6,7 +6,7 @@ const sendSMS = async (message, recipient) => {
   const res = await client.messages.create({
     body: message,
     from: sender,
-    to: recipient
+    to: '+' + recipient
   })
 
   return res
