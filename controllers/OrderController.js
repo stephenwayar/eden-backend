@@ -4,6 +4,7 @@ const Order = require('../models/Order')
 const OrderItem = require('../models/OrderItem')
 const User = require('../models/User')
 const Product = require('../models/Product')
+const { sendSMS } = require('../helpers/sms')
 
 //post controller
 exports.place_order = async (req, res) => {
@@ -105,21 +106,94 @@ exports.update_order = async (req, res, next) => {
   }
 
   const ID = req.params.id
+  const firstName = req.user.firstName
   const { status } = req.body
 
-  try{
-    const order = await Order.findByIdAndUpdate(
-      ID, 
-      { status }, 
-      { new: true, runValidators: true, context: 'query' }
-    ).populate('customer order_items')
+  if(status === 'confirmed'){
+    try{
+      const order = await Order.findByIdAndUpdate(
+        ID, 
+        { status }, 
+        { new: true, runValidators: true, context: 'query' }
+      )
 
-    res.status(200).json(order)
-  }catch(error){
-    logger.error('Failed to update order status', error)
+      const sms = `Hello ${firstName}, \n\nYour order with ID: #${ID} is confirmed! Check your email for your package details. We will let you know when your order is being delivered. \n\nCheers!`
+
+      // send confirmation email with order summary
+      await sendSMS(sms, req.user.phone_number)
+  
+      res.status(200).json(order)
+    }catch(error){
+      logger.error('Failed to confirm order', error)
+      res.status(400).json({
+        success: false,
+        message: 'Failed to confirm order'
+      })
+    }
+  }else if(status === 'outForDelivery'){
+    try{
+      const order = await Order.findByIdAndUpdate(
+        ID, 
+        { status }, 
+        { new: true, runValidators: true, context: 'query' }
+      )
+
+      const sms = `Hello ${firstName}, \n\nYour order with ID: #${ID} is out for delivery! Our delivery agent will contact you to receive your package. \n\nCheers!`
+
+      // send confirmation email with order summary
+      await sendSMS(sms, req.user.phone_number)
+  
+      res.status(200).json(order)
+    }catch(error){
+      logger.error('Failed to confirm order', error)
+      res.status(400).json({
+        success: false,
+        message: 'Failed to confirm order'
+      })
+    }
+  }else if(status === 'completed'){
+    try{
+      const order = await Order.findByIdAndUpdate(
+        ID, 
+        { status }, 
+        { new: true, runValidators: true, context: 'query' }
+      )
+
+      // send order completion email
+  
+      res.status(200).json(order)
+    }catch(error){
+      logger.error('Failed to confirm order', error)
+      res.status(400).json({
+        success: false,
+        message: 'Failed to confirm order'
+      })
+    }
+  }else if(status === 'canceled'){
+    try{
+      const order = await Order.findByIdAndUpdate(
+        ID, 
+        { status }, 
+        { new: true, runValidators: true, context: 'query' }
+      )
+
+      const sms = `Hello ${firstName}, \n\nYour order with ID:${ID} has been cancelled on your request. \n\nHave a nice day!`
+
+      // send confirmation email with order summary
+      await sendSMS(sms, req.user.phone_number)
+  
+      res.status(200).json(order)
+    }catch(error){
+      logger.error('Failed to confirm order', error)
+      res.status(400).json({
+        success: false,
+        message: 'Failed to confirm order'
+      })
+    }
+  }else{
     res.status(400).json({
       success: false,
-      message: 'Failed to update order status'
+      message: 'Snap! There was a problem somewhere'
     })
   }
 }
