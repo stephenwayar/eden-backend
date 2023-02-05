@@ -5,6 +5,17 @@ const OrderItem = require('../models/OrderItem')
 const User = require('../models/User')
 const Product = require('../models/Product')
 const { sendSMS } = require('../helpers/sms')
+const { order_confirmed, order_for_delivery } = require('../templates/emails')
+const nodemailer = require("nodemailer")
+const { orderScreener } = require('../helpers/orderScreener')
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EDEN_SUPPORT_EMAIL,
+    pass: process.env.MAIL_PASSWORD,
+  }
+})
 
 //post controller
 exports.place_order = async (req, res) => {
@@ -111,16 +122,48 @@ exports.update_order = async (req, res, next) => {
 
   if(status === 'confirmed'){
     try{
-      const order = await Order.findByIdAndUpdate(
+      let order = await Order.findByIdAndUpdate(
         ID, 
         { status }, 
         { new: true, runValidators: true, context: 'query' }
       )
 
-      const sms = `Hello ${firstName}, \n\nYour order with ID: #${ID} is confirmed! Check your email for your package details. We will let you know when your order is being delivered. \n\nCheers!`
+      order = await order.populate('customer order_items')
+      order = await order.populate({ path: 'order_items.product' })
 
-      // send confirmation email with order summary
-      await sendSMS(sms, req.user.phone_number)
+      const { 
+        reference, 
+        payment_provider, 
+        payment_method, 
+        balance, 
+        items, 
+        date_placed,
+        id, 
+        shipping_fee, 
+        amount, 
+        paid, 
+        confirmationSMS,
+        customer
+      } = orderScreener(order, firstName, ID)
+
+      await transporter.sendMail({
+        from: '"Eden Support" ',
+        to: customer,
+        subject: "Your #order has been confirmed!",
+        html: order_confirmed(
+          date_placed,
+          id,
+          shipping_fee,
+          amount,
+          paid,
+          reference,
+          payment_provider,
+          payment_method,
+          balance,
+          items
+        )
+      });
+      await sendSMS(confirmationSMS, req.user.phone_number)
   
       res.status(200).json(order)
     }catch(error){
@@ -132,16 +175,57 @@ exports.update_order = async (req, res, next) => {
     }
   }else if(status === 'outForDelivery'){
     try{
-      const order = await Order.findByIdAndUpdate(
+      let order = await Order.findByIdAndUpdate(
         ID, 
         { status }, 
         { new: true, runValidators: true, context: 'query' }
       )
 
-      const sms = `Hello ${firstName}, \n\nYour order with ID: #${ID} is out for delivery! Our delivery agent will contact you to receive your package. \n\nCheers!`
+      order = await order.populate('customer order_items')
+      order = await order.populate({ path: 'order_items.product' })
 
-      // send confirmation email with order summary
-      await sendSMS(sms, req.user.phone_number)
+      const { 
+        reference, 
+        payment_provider, 
+        payment_method, 
+        balance, 
+        items, 
+        date_placed,
+        id, 
+        shipping_fee, 
+        amount, 
+        paid, 
+        customer,
+        outForDeliverySMS ,
+        fName,
+        lName,
+        phone_number,
+        shipping_address
+      } = orderScreener(order, firstName, ID)
+
+      await transporter.sendMail({
+        from: '"Eden Support" ',
+        to: customer,
+        subject: "Your #order is out for delivery!",
+        html: order_for_delivery(
+          date_placed,
+          id,
+          shipping_fee,
+          amount,
+          paid,
+          reference,
+          payment_provider,
+          payment_method,
+          balance,
+          items,
+          fName,
+          lName,
+          customer,
+          phone_number,
+          shipping_address
+        )
+      });
+      await sendSMS(outForDeliverySMS, req.user.phone_number)
   
       res.status(200).json(order)
     }catch(error){
