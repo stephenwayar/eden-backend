@@ -1,4 +1,4 @@
-const verification_page = () => {
+const verification_page = (year) => {
   return(
     `
     <!DOCTYPE html
@@ -44,7 +44,7 @@ const verification_page = () => {
                   <a href="http://localhost:3000"
                     style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #056424; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: inline-block;">
                     <div style="display: flex; justify-content: center;">
-                      <img src="https://i.dlpng.com/static/png/6999891_preview.png" style="width: 40px; height: 40px;" />
+                      <img src="https://www.kindpng.com/picc/m/1-15146_image-result-for-leaf-vector-origins-pinterest-vector.png" style="width: 40px; height: 40px;" />
 
                       <span style="margin-left: 0.5rem; margin-top: 3px; font-family: sans-serif;"><i>eden</i></span>
                     </div>
@@ -77,7 +77,7 @@ const verification_page = () => {
                         style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
                         <p
                           style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #2d3748; font-size: 12px; text-align: center;">
-                          © 2022 Eden. All rights reserved.</p>
+                          © ${year} Eden. All rights reserved.</p>
 
                       </td>
                     </tr>
