@@ -5,7 +5,12 @@ const OrderItem = require('../models/OrderItem')
 const User = require('../models/User')
 const Product = require('../models/Product')
 const { sendSMS } = require('../helpers/sms')
-const { order_confirmed, order_for_delivery } = require('../templates/emails')
+const { 
+  order_confirmed,
+  order_for_delivery,
+  order_completed,
+  order_canceled
+} = require('../templates/emails')
 const nodemailer = require("nodemailer")
 const { orderScreener } = require('../helpers/orderScreener')
 
@@ -237,13 +242,55 @@ exports.update_order = async (req, res, next) => {
     }
   }else if(status === 'completed'){
     try{
-      const order = await Order.findByIdAndUpdate(
+      let order = await Order.findByIdAndUpdate(
         ID, 
         { status }, 
         { new: true, runValidators: true, context: 'query' }
       )
 
-      // send order completion email
+      order = await order.populate('customer order_items')
+      order = await order.populate({ path: 'order_items.product' })
+
+      const { 
+        reference, 
+        payment_provider, 
+        payment_method, 
+        balance, 
+        items, 
+        date_placed,
+        id, 
+        shipping_fee, 
+        amount, 
+        paid, 
+        customer,
+        fName,
+        lName,
+        phone_number,
+        shipping_address
+      } = orderScreener(order, firstName, ID)
+
+      await transporter.sendMail({
+        from: '"Eden Support" ',
+        to: customer,
+        subject: "#Order completed!",
+        html: order_completed(
+          date_placed,
+          id,
+          shipping_fee,
+          amount,
+          paid,
+          reference,
+          payment_provider,
+          payment_method,
+          balance,
+          items,
+          fName,
+          lName,
+          customer,
+          phone_number,
+          shipping_address
+        )
+      });
   
       res.status(200).json(order)
     }catch(error){
@@ -255,16 +302,48 @@ exports.update_order = async (req, res, next) => {
     }
   }else if(status === 'canceled'){
     try{
-      const order = await Order.findByIdAndUpdate(
+      let order = await Order.findByIdAndUpdate(
         ID, 
         { status }, 
         { new: true, runValidators: true, context: 'query' }
       )
 
-      const sms = `Hello ${firstName}, \n\nYour order with ID:${ID} has been cancelled on your request. \n\nHave a nice day!`
+      order = await order.populate('customer order_items')
+      order = await order.populate({ path: 'order_items.product' })
 
-      // send confirmation email with order summary
-      await sendSMS(sms, req.user.phone_number)
+      const { 
+        reference, 
+        payment_provider, 
+        payment_method, 
+        balance, 
+        items, 
+        date_placed,
+        id, 
+        shipping_fee, 
+        amount, 
+        paid, 
+        customer,
+        canceledSMS
+      } = orderScreener(order, firstName, ID)
+
+      await transporter.sendMail({
+        from: '"Eden Support" ',
+        to: customer,
+        subject: "Your #order has been canceled!",
+        html: order_canceled(
+          date_placed,
+          id,
+          shipping_fee,
+          amount,
+          paid,
+          reference,
+          payment_provider,
+          payment_method,
+          balance,
+          items
+        )
+      });
+      await sendSMS(canceledSMS, req.user.phone_number)
   
       res.status(200).json(order)
     }catch(error){

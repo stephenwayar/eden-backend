@@ -24,6 +24,8 @@ function orderScreener(order, firstName, ID){
 
   const outForDeliverySMS = `Hello ${firstName}, \n\nYour order with ID: #${ID} is out for delivery! Our delivery agent will contact you to receive your package. \n\nCheers!`
 
+  const canceledSMS = `Hello ${firstName}, \n\nYour order with ID:${ID} has been cancelled on your request. \n\nHave a nice day!`
+
   const reference = order.reference ? order.reference : 'null'
   const payment_provider = order.payment_provider === 'cod' ? 'C.O.D' : order.payment_provider
   const payment_method = order.payment_method === 'cod' ? 'C.O.D' : 'Card'
@@ -58,7 +60,8 @@ function orderScreener(order, firstName, ID){
     lName,
     email,
     phone_number,
-    shipping_address
+    shipping_address,
+    canceledSMS
   }
 }
 
