@@ -22,6 +22,15 @@ const AdminSchema = new mongoose.Schema({
     required: true
   },
 
+  role: {
+    type: String,
+    required: true,
+    enum: [
+      'super',
+      'basic'
+    ]
+  },
+
   otpToken: {
     type: Number
   },

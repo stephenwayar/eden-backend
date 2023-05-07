@@ -27,7 +27,7 @@ exports.post_login_user = async (req, res) => {
 
   const passwordIsCorrect = user ? await bcrypt.compare(password, user.password) : false
 
-  if(!(user && passwordIsCorrect)){
+  if (!(user && passwordIsCorrect)) {
     return res.status(401).json({
       success: false,
       message: "Email or password is incorrect"
@@ -77,7 +77,7 @@ exports.post_register_user = async (req, res) => {
 
   const user = await User.findOne({ email })
 
-  if(user){
+  if (user) {
     return res.status(400).json({
       success: false,
       message: "There is a user with this email already"
@@ -99,7 +99,7 @@ exports.post_register_user = async (req, res) => {
 
       newUser.password = hash
 
-      try{
+      try {
         await newUser.save()
 
         await transporter.sendMail({
@@ -110,7 +110,7 @@ exports.post_register_user = async (req, res) => {
         });
 
         res.status(201).end()
-      } catch(error) {
+      } catch (error) {
         next(error)
       }
     })
@@ -120,14 +120,14 @@ exports.post_register_user = async (req, res) => {
 exports.post_forgot_password_user = async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
 
-  if(!user){
+  if (!user) {
     return res.status(404).json({
       success: false,
       message: 'Sorry, user does not exist in our records'
     })
   }
 
-  try{
+  try {
     const token = Math.floor(1000 + Math.random() * 9000)
 
     user.otpToken = token
@@ -143,7 +143,7 @@ exports.post_forgot_password_user = async (req, res) => {
     })
 
     res.status(200).end()
-  }catch(exception){
+  } catch (exception) {
     res.status(400).json({
       success: false,
       message: 'Failed to process request. Try again'
@@ -154,7 +154,7 @@ exports.post_forgot_password_user = async (req, res) => {
 exports.post_reset_password_user = async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
 
-  if(!user){
+  if (!user) {
     return res.status(404).json({
       success: false,
       message: 'Sorry, user does not exist in our records'
@@ -169,7 +169,7 @@ exports.post_reset_password_user = async (req, res) => {
       user.otpToken = null
       user.otpExpires = null
 
-      try{
+      try {
         const savedUser = await user.save()
 
         await transporter.sendMail({
@@ -180,7 +180,7 @@ exports.post_reset_password_user = async (req, res) => {
         })
 
         res.status(200).end()
-      } catch(exception) {
+      } catch (exception) {
         res.status(400).json({
           success: false,
           message: 'Failed to reset password. Try again'
@@ -194,7 +194,7 @@ exports.post_change_password_user = async (req, res, next) => {
   const { email, currentPassword, newPassword } = req.body
   const user = await User.findOne({ email })
 
-  if(!user){
+  if (!user) {
     return res.status(404).json({
       success: false,
       message: "Snap! there was a problem somewhere"
@@ -203,7 +203,7 @@ exports.post_change_password_user = async (req, res, next) => {
 
   const passwordIsCorrect = await bcrypt.compare(currentPassword, user.password)
 
-  if(!passwordIsCorrect){
+  if (!passwordIsCorrect) {
     return res.status(401).json({
       success: false,
       message: "Your password was incorrect"
@@ -213,10 +213,10 @@ exports.post_change_password_user = async (req, res, next) => {
   bcrypt.genSalt(10, (_err, salt) => {
     bcrypt.hash(newPassword, salt, async (err, hash) => {
       if (err) throw err
-7
+      7
       user.password = hash
 
-      try{
+      try {
         const savedUser = await user.save()
 
         await transporter.sendMail({
@@ -227,24 +227,24 @@ exports.post_change_password_user = async (req, res, next) => {
         })
 
         res.status(201).end()
-      } catch(error) {
+      } catch (error) {
         next(error)
       }
     })
-  })  
+  })
 }
 
 exports.verify_user_otp = async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
 
-  if(!user){
+  if (!user) {
     return res.status(404).json({
       success: false,
       message: 'Snap! there was a problem somewhere'
     })
   }
 
-  if(user.otpToken.toString() === req.body.code && user.otpExpires > Date.now()){
+  if (user.otpToken.toString() === req.body.code && user.otpExpires > Date.now()) {
     return res.status(200).end()
   }
 
@@ -257,21 +257,21 @@ exports.verify_user_otp = async (req, res) => {
 exports.verify_user_account = async (req, res) => {
   const user = await User.findOne({ email: req.body.email })
 
-  if(!user){
+  if (!user) {
     return res.status(404).json({
       success: false,
       message: 'Sorry, user does not exist in our records'
     })
   }
 
-  if(user.verified){
+  if (user.verified) {
     return res.status(200).json({
       success: false,
       message: 'Your account is already verified'
     })
   }
 
-  try{
+  try {
     user.verified = true
 
     const savedUser = await user.save()
@@ -287,7 +287,7 @@ exports.verify_user_account = async (req, res) => {
       success: true,
       message: 'Success! email verification complete'
     })
-  }catch(exception){
+  } catch (exception) {
     res.status(400).json({
       success: false,
       message: 'Failed to verify account. Please try again'
@@ -298,14 +298,14 @@ exports.verify_user_account = async (req, res) => {
 exports.request_verification = async (req, res, next) => {
   const user = await User.findOne({ email: req.params.email })
 
-  if(!user){
+  if (!user) {
     return res.status(404).json({
       success: false,
       message: 'Sorry, user does not exist in our records'
     })
   }
 
-  try{
+  try {
     await transporter.sendMail({
       from: '"Eden Support" ',
       to: user.email,
@@ -314,7 +314,7 @@ exports.request_verification = async (req, res, next) => {
     });
 
     res.status(201).end()
-  } catch(error) {
+  } catch (error) {
     next(error)
   }
 }
@@ -328,7 +328,7 @@ exports.auth_with_google = async (req, res) => {
 
   const user = await User.findOne({ email })
 
-  if(user){
+  if (user) {
     const userForToken = {
       email: user.email,
       id: user._id,
@@ -359,7 +359,7 @@ exports.auth_with_google = async (req, res) => {
       verified: user.verified,
       id: user._id
     })
-  }else{
+  } else {
     const password = Math.random().toString(36).slice(-10);
 
     const user = new User({
@@ -377,16 +377,15 @@ exports.auth_with_google = async (req, res) => {
 
         user.password = hash
 
-        try{
+        try {
           const newUser = await user.save()
 
           const userForToken = {
             email: newUser.email,
             id: newUser._id,
-    
-    firstName: user.firstName,
-    lastName: user.lastName,        phone_number: user.phone_number,
-    
+            firstName: user.firstName,
+            lastName: user.lastName, phone_number: user.phone_number,
+
           }
 
           const token = jwt.sign(
@@ -406,7 +405,7 @@ exports.auth_with_google = async (req, res) => {
             verified: newUser.verified,
             id: newUser._id
           })
-        }catch(exception){
+        } catch (exception) {
           console.log(exception)
           res.status(424).end()
         }
@@ -423,7 +422,7 @@ exports.post_login_admin = async (req, res) => {
 
   const passwordIsCorrect = admin ? await bcrypt.compare(password, admin.password) : false
 
-  if(!(admin && passwordIsCorrect)){
+  if (!(admin && passwordIsCorrect)) {
     return res.status(401).json({
       success: false,
       message: "Email or password is incorrect"
@@ -456,12 +455,13 @@ exports.post_register_admin = async (req, res, next) => {
     lastName,
     email,
     password,
+    role
   } = req.body
 
   const admin = await Admin.findOne({ email })
   const user = await User.findOne({ email })
 
-  if(admin || user){
+  if (admin || user) {
     return res.status(400).json({
       success: false,
       message: "There is a user with this email already"
@@ -472,7 +472,8 @@ exports.post_register_admin = async (req, res, next) => {
     firstName,
     lastName,
     email,
-    password
+    password,
+    role
   })
 
   bcrypt.genSalt(10, (_err, salt) => {
@@ -481,25 +482,107 @@ exports.post_register_admin = async (req, res, next) => {
 
       newAdmin.password = hash
 
-      try{
+      try {
         const savedAdmin = await newAdmin.save()
 
         res.status(201).json(savedAdmin)
-      } catch(error) {
+      } catch (error) {
         next(error)
       }
     })
   })
 }
 
-exports.post_forgot_password_admin = (req, res) => {
+exports.post_forgot_password_admin = async (req, res) => {
+  const admin = await Admin.findOne({ email: req.body.email })
 
+  if (!admin) {
+    return res.status(404).json({
+      success: false,
+      message: 'Sorry, user does not exist in our records'
+    })
+  }
+
+  try {
+    const token = Math.floor(1000 + Math.random() * 9000)
+
+    admin.otpToken = token
+    admin.otpExpires = Date.now() + 3600000
+
+    const savedAdmin = await admin.save()
+
+    await transporter.sendMail({
+      from: '"Eden Support" ',
+      to: savedAdmin.email,
+      subject: "OTP Reset Code",
+      html: otp_mail(savedAdmin, token)
+    })
+
+    res.status(200).end()
+  } catch (exception) {
+    console.log(exception)
+    res.status(400).json({
+      success: false,
+      message: 'Failed to process request. Try again'
+    })
+  }
 }
 
-exports.post_reset_password_admin = (req, res) => {
+exports.post_reset_password_admin = async (req, res) => {
+  const admin = await Admin.findOne({ email: req.body.email })
 
+  if (!admin) {
+    return res.status(404).json({
+      success: false,
+      message: 'Sorry, user does not exist in our records'
+    })
+  }
+
+  bcrypt.genSalt(10, (_err, salt) => {
+    bcrypt.hash(req.body.password, salt, async (err, hash) => {
+      if (err) throw err
+
+      admin.password = hash
+      admin.otpToken = null
+      admin.otpExpires = null
+
+      try {
+        const savedAdmin = await admin.save()
+
+        await transporter.sendMail({
+          from: '"Eden Support" ',
+          to: savedAdmin.email,
+          subject: "CONFIRMATION: Password Reset",
+          html: paasword_reset_success_mail(savedAdmin)
+        })
+
+        res.status(200).end()
+      } catch (exception) {
+        res.status(400).json({
+          success: false,
+          message: 'Failed to reset password. Try again'
+        })
+      }
+    })
+  })
 }
 
 exports.verify_admin_otp = async (req, res) => {
+  const admin = await Admin.findOne({ email: req.body.email })
 
+  if (!admin) {
+    return res.status(404).json({
+      success: false,
+      message: 'Snap! there was a problem somewhere'
+    })
+  }
+
+  if (admin.otpToken.toString() === req.body.code.toString() && admin.otpExpires > Date.now()) {
+    return res.status(200).end()
+  }
+
+  res.status(400).json({
+    success: false,
+    message: 'OTP is invalid or has expired'
+  })
 }
