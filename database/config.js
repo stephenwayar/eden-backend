@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const logger = require('../utils/logger')
 const url = process.env.MONGODB_URI
 
-mongoose.set('strictQuery', false); // Add this line to disable the strictQuery option
+mongoose.set('strictQuery', false); 
 
 logger.info("Connecting to mongoDB...")
 
