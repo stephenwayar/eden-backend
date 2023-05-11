@@ -206,7 +206,7 @@ exports.post_change_password_user = async (req, res, next) => {
   if (!passwordIsCorrect) {
     return res.status(401).json({
       success: false,
-      message: "Your password was incorrect"
+      message: "Password is incorrect"
     })
   }
 
@@ -486,6 +486,50 @@ exports.post_register_admin = async (req, res, next) => {
         const savedAdmin = await newAdmin.save()
 
         res.status(201).json(savedAdmin)
+      } catch (error) {
+        next(error)
+      }
+    })
+  })
+}
+
+exports.post_change_password_admin = async (req, res, next) => {
+  const { email, current_password, new_password } = req.body
+  const admin = await Admin.findOne({ email })
+
+  if (!admin) {
+    return res.status(404).json({
+      success: false,
+      message: "Snap! there was a problem somewhere"
+    })
+  }
+
+  const passwordIsCorrect = await bcrypt.compare(current_password, admin.password)
+
+  if (!passwordIsCorrect) {
+    return res.status(401).json({
+      success: false,
+      message: "Password is incorrect"
+    })
+  }
+
+  bcrypt.genSalt(10, (_err, salt) => {
+    bcrypt.hash(new_password, salt, async (err, hash) => {
+      if (err) throw err
+      7
+      admin.password = hash
+
+      try {
+        const savedAdmin = await admin.save()
+
+        await transporter.sendMail({
+          from: '"Eden Support" ',
+          to: savedAdmin.email,
+          subject: "CONFIRMATION: Password Reset",
+          html: paasword_reset_success_mail(savedAdmin)
+        })
+
+        res.status(201).end()
       } catch (error) {
         next(error)
       }

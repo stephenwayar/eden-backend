@@ -26,6 +26,8 @@ Router.post('/api/auth/with_google', AuthController.auth_with_google)
 //Admin routes
 Router.post('/api/auth/login/admin', AuthController.post_login_admin)
 
+Router.post('/api/auth/change_password/admin', AuthController.post_change_password_admin)
+
 Router.post('/api/auth/register/admin', AuthController.post_register_admin)
 
 Router.post('/api/auth/forgot_password/admin', AuthController.post_forgot_password_admin)
