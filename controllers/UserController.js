@@ -1,4 +1,5 @@
 const User = require("../models/User")
+const Admin = require('../models/Admin')
 const logger = require('../utils/logger')
 const bcrypt = require("bcryptjs")
 const deleteAvatar = require('../helpers/deleteImage')
@@ -23,7 +24,7 @@ exports.get_users = async function(req, res, next){
   }
 }
 
-exports.get_user = async function(req, res){
+exports.get_user = async function(req, res) {
   if (!req.user) {
     logger.info('token is missing')
     return res.status(401).json({
@@ -121,5 +122,23 @@ exports.delete_account = async function(req, res){
       message: "Failed to delete account",
       success: false
     })
+  }
+}
+
+exports.get_admins = async function (req, res, next) {
+  if (!req.user) {
+    logger.info('token is missing')
+    return res.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+
+  try {
+    const admins = await Admin.find({ role: 'basic' })
+
+    res.status(200).json(admins)
+  } catch (error) {
+    logger.error('Failed to fetch admins', error)
+    next(error)
   }
 }
