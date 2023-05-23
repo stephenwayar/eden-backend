@@ -437,7 +437,7 @@ exports.post_login_admin = async (req, res) => {
   const token = jwt.sign(
     adminForToken,
     process.env.SECRET,
-    { expiresIn: 60 * 60 }
+    { expiresIn: '1d' }
   )
 
   res.status(200).send({

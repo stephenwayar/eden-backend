@@ -4,25 +4,26 @@ const logger = require('../utils/logger')
 const bcrypt = require("bcryptjs")
 const deleteAvatar = require('../helpers/deleteImage')
 
-exports.get_users = async function(req, res, next){
+exports.get_users = async function (req, res, next) {
   if (!req.user) {
-    logger.info('token is missing')
+    logger.info('token is missing');
     return res.status(401).json({
       error: 'token missing or invalid'
-    })
+    });
   }
 
-  try{
-    let users = await User.find({}).populate('orders')
-    users = await users.populate({ path: 'orders.order_items' })
-    users = await users.populate({ path: 'orders.order_items.product' })
-  
-    res.status(200).json(users)
-  }catch(error){
-    logger.error('Failed to fetch users',error)
-    next(error)
+  try {
+    let users = await User.find({})
+      .populate('orders')
+      .populate({ path: 'orders.order_items' })
+      .populate({ path: 'orders.order_items.product' });
+
+    res.status(200).json(users);
+  } catch (error) {
+    logger.error('Failed to fetch users', error);
+    next(error);
   }
-}
+};
 
 exports.get_user = async function(req, res) {
   if (!req.user) {
