@@ -11,6 +11,6 @@ Router.put('/api/orders/:id', OrderController.update_order)
 //get routes
 Router.get('/api/orders/:id', OrderController.get_order)
 
-Router.get('/api/orders', OrderController.get_orders)
+Router.get('/api/orders/all/:status', OrderController.get_orders)
 
 module.exports = Router

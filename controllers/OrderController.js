@@ -394,8 +394,10 @@ exports.get_orders = async (req, res, next) => {
       error: 'token missing or invalid'
     })
   }
+  
+  const status = req.params.status
 
-  const status = req.body.status
+  console.log(status, typeof status, req.params)
 
   if (!status) {
     logger.info('Order status is required')
