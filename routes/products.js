@@ -3,6 +3,8 @@ const ProductController = require('../controllers/ProductController')
 const Router = express.Router()
 
 // GET route
+Router.get('/api/stats', ProductController.get_stats)
+
 Router.get('/api/products', ProductController.get_products)
 
 Router.get('/api/products/:id', ProductController.get_product)

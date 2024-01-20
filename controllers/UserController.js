@@ -36,7 +36,8 @@ exports.get_user = async function(req, res) {
   let ID = req.params.id
 
   try{
-    let user = await User.findById(ID).populate('orders')
+    let user = await User.findById(ID)
+    user = await user.populate('orders')
     user = await user.populate({ path: 'orders.order_items' })
     user = await user.populate({ path: 'orders.order_items.product' })
 
