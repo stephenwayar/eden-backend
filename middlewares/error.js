@@ -22,6 +22,13 @@ const errorHandler = (error, request, response, next) => {
       error: 'Snap! there was a problem somewhere'
     })
   }
+  // else {
+  //   logger.error(error.message)
+
+  //   response.status(500).json({
+  //     error: 'Snap! there was a problem somewhere'
+  //   })
+  // }
 
   logger.error(error.message)
 

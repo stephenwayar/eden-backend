@@ -122,7 +122,6 @@ exports.update_order = async (req, res, next) => {
   }
 
   const ID = req.params.id
-  const firstName = req.user.firstName
   const { status } = req.body
 
   if(status === 'confirmed'){
@@ -149,7 +148,7 @@ exports.update_order = async (req, res, next) => {
         paid, 
         confirmationSMS,
         customer
-      } = orderScreener(order, firstName, ID)
+      } = orderScreener(order, order.customer.firstName, ID)
 
       await transporter.sendMail({
         from: '"Eden Support" ',
@@ -168,11 +167,13 @@ exports.update_order = async (req, res, next) => {
           items
         )
       });
-      await sendSMS(confirmationSMS, req.user.phone_number)
-  
+
+      await sendSMS(confirmationSMS, order.customer.phone_number)  
+
       res.status(200).json(order)
     }catch(error){
       logger.error('Failed to confirm order', error)
+
       res.status(400).json({
         success: false,
         message: 'Failed to confirm order'
@@ -206,7 +207,7 @@ exports.update_order = async (req, res, next) => {
         lName,
         phone_number,
         shipping_address
-      } = orderScreener(order, firstName, ID)
+      } = orderScreener(order, order.customer.firstName, ID)
 
       await transporter.sendMail({
         from: '"Eden Support" ',
@@ -230,7 +231,8 @@ exports.update_order = async (req, res, next) => {
           shipping_address
         )
       });
-      await sendSMS(outForDeliverySMS, req.user.phone_number)
+
+      await sendSMS(outForDeliverySMS, order.customer.phone_number)
   
       res.status(200).json(order)
     }catch(error){
@@ -267,7 +269,7 @@ exports.update_order = async (req, res, next) => {
         lName,
         phone_number,
         shipping_address
-      } = orderScreener(order, firstName, ID)
+      } = orderScreener(order, order.customer.firstName, ID)
 
       await transporter.sendMail({
         from: '"Eden Support" ',
@@ -324,7 +326,7 @@ exports.update_order = async (req, res, next) => {
         paid, 
         customer,
         canceledSMS
-      } = orderScreener(order, firstName, ID)
+      } = orderScreener(order, order.customer.firstName, ID)
 
       await transporter.sendMail({
         from: '"Eden Support" ',
@@ -343,7 +345,8 @@ exports.update_order = async (req, res, next) => {
           items
         )
       });
-      await sendSMS(canceledSMS, req.user.phone_number)
+
+      await sendSMS(canceledSMS, order.customer.phone_number)
   
       res.status(200).json(order)
     }catch(error){
@@ -397,7 +400,7 @@ exports.get_orders = async (req, res, next) => {
   
   const status = req.params.status
 
-  console.log(status, typeof status, req.params)
+  // console.log(status, typeof status, req.params)
 
   if (!status) {
     logger.info('Order status is required')
