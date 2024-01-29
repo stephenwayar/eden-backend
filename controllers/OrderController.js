@@ -9,7 +9,8 @@ const {
   order_confirmed,
   order_for_delivery,
   order_completed,
-  order_canceled
+  order_canceled,
+  confirm_order_mail
 } = require('../templates/emails')
 const nodemailer = require("nodemailer")
 const { orderScreener } = require('../helpers/orderScreener')
@@ -95,6 +96,13 @@ exports.place_order = async (req, res) => {
     //     model: 'Order'
     //   } 
     // })
+
+    await transporter.sendMail({
+      from: '"Eden Support" ',
+      to: process.env.EDEN_SUPPORT_EMAIL,
+      subject: "New Order has been placed!",
+      html: confirm_order_mail(savedOrder._id)
+    });
     
     savedOrder = await savedOrder.populate('order_items') // populates order_items objectId
     savedOrder = await savedOrder.populate({ 
