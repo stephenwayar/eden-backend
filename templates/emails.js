@@ -569,181 +569,211 @@ const order_confirmed = (
   ) => {
   return(
     `
-    <!DOCTYPE html
-      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="color-scheme" content="light">
-      <meta name="supported-color-schemes" content="light">
-      <style>
-        @media only screen and (max-width: 600px) {
-          .inner-body {
-            width: 100% !important;
-          }
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+    <style>
+      @media only screen and (max-width: 600px) {
+        .inner-body {
+          width: 100% !important;
+        }
 
-          .footer {
-            width: 100% !important;
-          }
+        .footer {
+          width: 100% !important;
         }
-        @media only screen and (max-width: 500px) {
-          .button {
-            width: 100% !important;
-          }
+      }
+      @media only screen and (max-width: 500px) {
+        .button {
+          width: 100% !important;
         }
-        .item-title{
-          display: grid; 
-          grid-template-columns: repeat(4, minmax(0, 1fr)); 
-          border-bottom: solid 1px #3d4852;
-        }
-      </style>
-    </head>
-    <body style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -webkit-text-size-adjust: none; background-color: #eff3e7; color: #718096; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
-      <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation"
-        style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #eff3e7; margin: 0; padding: 0; width: 100%;">
-        <tr>
-          <td align="center"
-            style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
-            <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation"
-              style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;">
-              <tr>
-              <tr>
-                <td class="header"
-                  style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; padding: 35px 0; text-align: center;">
-                  <a href="http://localhost:3000"
-                    style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #056424; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: inline-block;">
-                    <div style="display: flex; justify-content: center;">
-                      <img src="https://www.kindpng.com/picc/m/1-15146_image-result-for-leaf-vector-origins-pinterest-vector.png" style="width: 40px; height: 40px;"/>
-                    
-                      <span style="margin-left: 0.5rem; margin-top: 3px; font-family: sans-serif;"><i>eden</i></span>
-                    </div>
-                  </a>
-                </td>
-              </tr>
-              <!-- Email Body -->
-              <tr>
-                <td class="body" width="100%" cellpadding="0" cellspacing="0"
-                  style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; border-bottom: 1px solid #edf2f7; border-top: 1px solid #edf2f7; margin: 0; padding-top: 50px; padding-bottom: 50px; width: 100%;">
-                  <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation"
-                    style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; background-color: #ffffff; border-color: #e8e5ef; border-radius: 2px; border-width: 1px; box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015); margin: 0 auto; padding: 0; width: 670px;">
-                    <!-- Body content -->
+      }
+    </style>
+  </head>
+
+  <body style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -webkit-text-size-adjust: none; background-color: #eff3e7; color: #718096; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
+    <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #eff3e7; margin: 0; padding: 0; width: 100%;">
+      <tr>
+        <td align="center" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
+          <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;">
+            <tr>
+            <tr>
+              <td class="header" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; padding: 35px 0; text-align: center;">
+                <a href="http://localhost:3000" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #056424; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: inline-block;">
+                  <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                     <tr>
-                      <td class="content-cell"
-                        style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
-                        <h1
-                          style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 40px; text-align: center;">
-                          ORDER CONFIRMATION</h1>
+                      <td align="center">
+                        <table cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td>
+                              <img
+                                src="https://www.kindpng.com/picc/m/1-15146_image-result-for-leaf-vector-origins-pinterest-vector.png"
+                                style="width: 40px; height: 40px;" />
+                            </td>
+                            <td style="padding-left: 0.5rem; font-family: sans-serif;">
+                              <i>eden</i>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </a>
+              </td>
+            </tr>
+            <!-- Email Body -->
+            <tr>
+              <td class="body" width="100%" cellpadding="0" cellspacing="0" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; border-bottom: 1px solid #edf2f7; border-top: 1px solid #edf2f7; margin: 0; padding-top: 50px; padding-bottom: 50px; width: 100%;">
+                <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; background-color: #ffffff; border-color: #e8e5ef; border-radius: 2px; border-width: 1px; box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015); margin: 0 auto; padding: 0; width: 670px;">
+                  <!-- Body content -->
+                  <tr>
+                    <td class="content-cell" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
+                      <h1 style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 40px; text-align: center;">
+                        ORDER CONFIRMATION
+                      </h1>
 
-                          <p style="text-align: center;">We've recieved your order and will contact you as soon as package is shipped. You can find your order summary below.</p>
+                      <p style="text-align: center;">We've recieved your order and will contact you as soon as package is
+                        shipped. You can find your order summary below.
+                      </p>
 
-                        <hr/> 
+                      <hr />
 
-                        <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
-                          Order Items</h3>
+                      <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                        Order Items
+                      </h3>
 
-                        <div>
-                          <div class="item-title">
-                            <div>
+                      <div>
+                        <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                          <tr>
+                            <td width="25%" style="border-bottom: solid 1px #3d4852;">
                               <p>Image</p>
-                            </div>
+                            </td>
 
-                            <div>
+                            <td width="25%" style="border-bottom: solid 1px #3d4852;">
                               <p>Name</p>
-                            </div>
+                            </td>
 
-                            <div>
+                            <td width="25%" style="border-bottom: solid 1px #3d4852;">
                               <p>Quantity</p>
-                            </div>
+                            </td>
 
-                            <div>
+                            <td width="25%" style="border-bottom: solid 1px #3d4852;">
                               <p>Total Price</p>
-                            </div>
-                          </div>
+                            </td>
+                          </tr>
+                        </table>
 
-                          <div>
-                            ${items}
-                          </div>
+                        <div style="margin-top: 15px;">
+                          ${items}
                         </div>
+                      </div>
 
+                      <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                        Order Summary
+                      </h3>
 
-                        <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
-                          Order Summary</h3>
+                      <p style="text-align: center;">Date Placed: ${date_placed}</p>
+                      <p style="text-align: center;">Order ID: ${order_id}</p>
 
-                        <p style="text-align: center;">Date Placed: ${date_placed}</p>
-                        <p style="text-align: center;">Order ID: ${order_id}</p>
-
-                        <div>
-                          <div style="display: flex; justify-content: space-between;">
-                            <p>Shipping fee:</p>
-
-                            <p>#${shipping_fee}</p>
-                          </div>
-
-                          <div style="display: flex; justify-content: space-between;">
-                            <p>Order total (+ shipping):</p>
-
-                            <p>#${order_total}</p>
-                          </div>
-
-                          <div style="display: flex; justify-content: space-between;">
-                            <p>Paid:</p>
-
-                            <p>${paid}</p>
-                          </div>
-
-                          <div style="display: flex; justify-content: space-between;">
-                            <p>Reference:</p>
-
-                            <p>${reference}</p>
-                          </div>
-
-                          <div style="display: flex; justify-content: space-between;">
-                            <p>Payment Provider:</p>
-
-                            <p>${payment_provider}</p>
-                          </div>
-
-                          <div style="display: flex; justify-content: space-between;">
-                            <p>Payment Method:</p>
-
-                            <p>${payment_method}</p>
-                          </div>
-
-                          <div style="display: flex; justify-content: space-between;">
-                            <p>Balance (on delivery):</p>
-
-                            <p>#${balance}</p>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td
-                  style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
-                  <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation"
-                    style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; margin: 0 auto; padding: 0; text-align: center; width: 570px;">
-                    <tr>
-                      <td class="content-cell" align="center"
-                        style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
-                        <p
-                          style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #2d3748; font-size: 12px; text-align: center;">
-                          © ${year} Eden. All rights reserved.</p>
-
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </body>
-    </html>`
+                      <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                        <tr>
+                          <td style="padding-bottom: 20px;">
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td>Shipping fee:</td>
+                                <td align="right">#${shipping_fee}</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-bottom: 20px;">
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td>Order total (+ shipping):</td>
+                                <td align="right">#${order_total}</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-bottom: 20px;">
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td>Paid:</td>
+                                <td align="right">${paid}</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-bottom: 20px;">
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td>Reference:</td>
+                                <td align="right">${reference}</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-bottom: 20px;">
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td>Payment Provider:</td>
+                                <td align="right">${payment_provider}</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-bottom: 20px;">
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td>Payment Method:</td>
+                                <td align="right">${payment_method}</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-bottom: 20px;">
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td>Balance (on delivery):</td>
+                                <td align="right">#${balance}</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
+                <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; margin: 0 auto; padding: 0; text-align: center; width: 570px;">
+                  <tr>
+                    <td class="content-cell" align="center" style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
+                      <p style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #2d3748; font-size: 12px; text-align: center;">
+                        © ${year} Eden. All rights reserved.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`
   )
 }
 
@@ -766,9 +796,10 @@ const order_for_delivery = (
 ) => {
 return(
   `
-  <!DOCTYPE html
+<!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -784,19 +815,23 @@ return(
         width: 100% !important;
       }
     }
+
     @media only screen and (max-width: 500px) {
       .button {
         width: 100% !important;
       }
     }
-    .item-title{
-      display: grid; 
-      grid-template-columns: repeat(4, minmax(0, 1fr)); 
+
+    .item-title {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       border-bottom: solid 1px #3d4852;
     }
   </style>
 </head>
-<body style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -webkit-text-size-adjust: none; background-color: #eff3e7; color: #718096; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
+
+<body
+  style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -webkit-text-size-adjust: none; background-color: #eff3e7; color: #718096; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
   <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation"
     style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #eff3e7; margin: 0; padding: 0; width: 100%;">
     <tr>
@@ -811,8 +846,10 @@ return(
               <a href="http://localhost:3000"
                 style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #056424; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: inline-block;">
                 <div style="display: flex; justify-content: center;">
-                  <img src="https://www.kindpng.com/picc/m/1-15146_image-result-for-leaf-vector-origins-pinterest-vector.png" style="width: 40px; height: 40px;"/>
-                
+                  <img
+                    src="https://www.kindpng.com/picc/m/1-15146_image-result-for-leaf-vector-origins-pinterest-vector.png"
+                    style="width: 40px; height: 40px;" />
+
                   <span style="margin-left: 0.5rem; margin-top: 3px; font-family: sans-serif;"><i>eden</i></span>
                 </div>
               </a>
@@ -832,118 +869,171 @@ return(
                       style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 40px; text-align: center;">
                       OUT FOR DELIVERY</h1>
 
-                      <p style="text-align: center;">Hello, your order is out for delivery. Our delivery agent will contact you soon. Find your order summary below</p>
+                    <p style="text-align: center;">Hello, your order is out for delivery. Our delivery agent will
+                      contact you soon. Find your order summary below</p>
 
-                    <hr/> 
+                    <hr />
 
-                    <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                    <h3
+                      style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
                       Order Items</h3>
 
                     <div>
-                      <div class="item-title">
-                        <div>
-                          <p>Image</p>
-                        </div>
+                      <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                        <tr>
+                          <td width="25%" style="border-bottom: solid 1px #3d4852;">
+                            <p>Image</p>
+                          </td>
 
-                        <div>
-                          <p>Name</p>
-                        </div>
+                          <td width="25%" style="border-bottom: solid 1px #3d4852;">
+                            <p>Name</p>
+                          </td>
 
-                        <div>
-                          <p>Quantity</p>
-                        </div>
+                          <td width="25%" style="border-bottom: solid 1px #3d4852;">
+                            <p>Quantity</p>
+                          </td>
 
-                        <div>
-                          <p>Total Price</p>
-                        </div>
-                      </div>
+                          <td width="25%" style="border-bottom: solid 1px #3d4852;">
+                            <p>Total Price</p>
+                          </td>
+                        </tr>
+                      </table>
 
-                      <div>
+                      <div style="margin-top: 15px;">
                         ${items}
                       </div>
                     </div>
 
-
-                    <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                    <h3
+                      style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
                       Order Summary</h3>
 
                     <p style="text-align: center;">Date Placed: ${date_placed}</p>
                     <p style="text-align: center;">Order ID: ${order_id}</p>
 
-                    <div>
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Shipping fee:</p>
+                    <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Shipping fee:</td>
+                              <td align="right">#${shipping_fee}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Order total (+ shipping):</td>
+                              <td align="right">#${order_total}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Paid:</td>
+                              <td align="right">${paid}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Reference:</td>
+                              <td align="right">${reference}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Payment Provider:</td>
+                              <td align="right">${payment_provider}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Payment Method:</td>
+                              <td align="right">${payment_method}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Balance (on delivery):</td>
+                              <td align="right">#${balance}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
 
-                        <p>#${shipping_fee}</p>
-                      </div>
 
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Order total (+ shipping):</p>
+                    <hr />
 
-                        <p>#${order_total}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Paid:</p>
-
-                        <p>${paid}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Reference:</p>
-
-                        <p>${reference}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Payment Provider:</p>
-
-                        <p>${payment_provider}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Payment Method:</p>
-
-                        <p>${payment_method}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Balance (on delivery):</p>
-
-                        <p>#${balance}</p>
-                      </div>
-                    </div>
-
-                    <hr/> 
-
-                    <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                    <h3
+                      style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
                       Shipping Details</h3>
 
-                    <div>
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Full Name: </p>
+                    <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Full Name:</td>
+                              <td align="right">${firstName} ${lastName}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Email Address:</td>
+                              <td align="right">${email}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Phone Number:</td>
+                              <td align="right">${phone_number}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Shipping Address:</td>
+                              <td align="right">${shipping_address}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
 
-                        <p>${firstName} ${lastName}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Email Address: </p>
-
-                        <p>${email}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Phone Number: </p>
-
-                        <p>${phone_number}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Shipping Address: </p>
-
-                        <p>${shipping_address}</p>
-                      </div>
-                    </div>
                   </td>
                 </tr>
               </table>
@@ -971,6 +1061,7 @@ return(
     </tr>
   </table>
 </body>
+
 </html>`
 )
 }
@@ -993,234 +1084,12 @@ const order_completed = (
   shipping_address
 ) => {
 return(
-`
-  <!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="color-scheme" content="light">
-    <meta name="supported-color-schemes" content="light">
-    <style>
-      @media only screen and (max-width: 600px) {
-        .inner-body {
-          width: 100% !important;
-        }
-
-        .footer {
-          width: 100% !important;
-        }
-      }
-      @media only screen and (max-width: 500px) {
-        .button {
-          width: 100% !important;
-        }
-      }
-      .item-title{
-        display: grid; 
-        grid-template-columns: repeat(4, minmax(0, 1fr)); 
-        border-bottom: solid 1px #3d4852;
-      }
-    </style>
-  </head>
-  <body style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -webkit-text-size-adjust: none; background-color: #eff3e7; color: #718096; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
-    <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation"
-      style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #eff3e7; margin: 0; padding: 0; width: 100%;">
-      <tr>
-        <td align="center"
-          style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
-          <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation"
-            style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;">
-            <tr>
-            <tr>
-              <td class="header"
-                style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; padding: 35px 0; text-align: center;">
-                <a href="http://localhost:3000"
-                  style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #056424; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: inline-block;">
-                  <div style="display: flex; justify-content: center;">
-                    <img src="https://www.kindpng.com/picc/m/1-15146_image-result-for-leaf-vector-origins-pinterest-vector.png" style="width: 40px; height: 40px;"/>
-                  
-                    <span style="margin-left: 0.5rem; margin-top: 3px; font-family: sans-serif;"><i>eden</i></span>
-                  </div>
-                </a>
-              </td>
-            </tr>
-            <!-- Email Body -->
-            <tr>
-              <td class="body" width="100%" cellpadding="0" cellspacing="0"
-                style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; border-bottom: 1px solid #edf2f7; border-top: 1px solid #edf2f7; margin: 0; padding-top: 50px; padding-bottom: 50px; width: 100%;">
-                <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation"
-                  style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; background-color: #ffffff; border-color: #e8e5ef; border-radius: 2px; border-width: 1px; box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015); margin: 0 auto; padding: 0; width: 670px;">
-                  <!-- Body content -->
-                  <tr>
-                    <td class="content-cell"
-                      style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
-                      <h1
-                        style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 40px; text-align: center;">
-                        ORDER COMPLETED</h1>
-
-                        <p style="text-align: center;">Thank you for shopping with us, your order has been completed!</p>
-
-                      <hr/> 
-
-                      <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
-                        Order Items</h3>
-
-                      <div>
-                        <div class="item-title">
-                          <div>
-                            <p>Image</p>
-                          </div>
-
-                          <div>
-                            <p>Name</p>
-                          </div>
-
-                          <div>
-                            <p>Quantity</p>
-                          </div>
-
-                          <div>
-                            <p>Total Price</p>
-                          </div>
-                        </div>
-
-                        <div>
-                          ${items}
-                        </div>
-                      </div>
-
-
-                      <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
-                        Order Summary</h3>
-
-                      <p style="text-align: center;">Date Placed: ${date_placed}</p>
-                      <p style="text-align: center;">Order ID: ${order_id}</p>
-
-                      <div>
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Shipping fee:</p>
-
-                          <p>#${shipping_fee}</p>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Order total (+ shipping):</p>
-
-                          <p>#${order_total}</p>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Paid:</p>
-
-                          <p>${paid}</p>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Reference:</p>
-
-                          <p>${reference}</p>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Payment Provider:</p>
-
-                          <p>${payment_provider}</p>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Payment Method:</p>
-
-                          <p>${payment_method}</p>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Balance (on delivery):</p>
-
-                          <p>#${balance}</p>
-                        </div>
-                      </div>
-
-                      <hr/> 
-
-                      <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
-                        Shipping Details</h3>
-
-                      <div>
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Full Name:</p>
-
-                          <p>${firstName} ${lastName}</p>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Email Address</p>
-
-                          <p>${email}</p>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Phone Number:</p>
-
-                          <p>${phone_number}</p>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between;">
-                          <p>Shipping Address:</p>
-
-                          <p>${shipping_address}</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td
-                style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
-                <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation"
-                  style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; margin: 0 auto; padding: 0; text-align: center; width: 570px;">
-                  <tr>
-                    <td class="content-cell" align="center"
-                      style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
-                      <p
-                        style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #2d3748; font-size: 12px; text-align: center;">
-                        © ${year} Eden. All rights reserved.</p>
-
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-  </body>
-  </html>`
-)
-}
-
-const order_canceled = (
-  date_placed, 
-  order_id, 
-  shipping_fee, 
-  order_total, 
-  paid, 
-  reference, 
-  payment_provider, 
-  payment_method, 
-  balance,
-  items
-) => {
-return(
-`
-  <!DOCTYPE html
+  `
+<!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="color-scheme" content="light">
@@ -1235,19 +1104,23 @@ return(
         width: 100% !important;
       }
     }
+
     @media only screen and (max-width: 500px) {
       .button {
         width: 100% !important;
       }
     }
-    .item-title{
-      display: grid; 
-      grid-template-columns: repeat(4, minmax(0, 1fr)); 
+
+    .item-title {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       border-bottom: solid 1px #3d4852;
     }
   </style>
-  </head>
-  <body style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -webkit-text-size-adjust: none; background-color: #eff3e7; color: #718096; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
+</head>
+
+<body
+  style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -webkit-text-size-adjust: none; background-color: #eff3e7; color: #718096; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
   <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation"
     style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #eff3e7; margin: 0; padding: 0; width: 100%;">
     <tr>
@@ -1262,8 +1135,10 @@ return(
               <a href="http://localhost:3000"
                 style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #056424; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: inline-block;">
                 <div style="display: flex; justify-content: center;">
-                  <img src="https://www.kindpng.com/picc/m/1-15146_image-result-for-leaf-vector-origins-pinterest-vector.png" style="width: 40px; height: 40px;"/>
-                
+                  <img
+                    src="https://www.kindpng.com/picc/m/1-15146_image-result-for-leaf-vector-origins-pinterest-vector.png"
+                    style="width: 40px; height: 40px;" />
+
                   <span style="margin-left: 0.5rem; margin-top: 3px; font-family: sans-serif;"><i>eden</i></span>
                 </div>
               </a>
@@ -1281,13 +1156,14 @@ return(
                     style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
                     <h1
                       style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 40px; text-align: center;">
-                      ORDER CANCELED</h1>
+                      ORDER COMPLETED</h1>
 
-                      <p style="text-align: center;">Your order has been canceled on your request. (If you did not cancel this order then please be notified that your order could not be processed at this time. We apologize for the inconveniences) Have a great day!</p>
+                    <p style="text-align: center;">Thank you for shopping with us, your order has been completed!</p>
 
-                    <hr/> 
+                    <hr />
 
-                    <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                    <h3
+                      style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
                       Order Items</h3>
 
                     <div>
@@ -1315,55 +1191,135 @@ return(
                     </div>
 
 
-                    <h3 style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                    <h3
+                      style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
                       Order Summary</h3>
 
                     <p style="text-align: center;">Date Placed: ${date_placed}</p>
                     <p style="text-align: center;">Order ID: ${order_id}</p>
 
-                    <div>
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Shipping fee:</p>
+                    <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Shipping fee:</td>
+                              <td align="right">#${shipping_fee}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Order total (+ shipping):</td>
+                              <td align="right">#${order_total}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Paid:</td>
+                              <td align="right">${paid}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Reference:</td>
+                              <td align="right">${reference}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Payment Provider:</td>
+                              <td align="right">${payment_provider}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Payment Method:</td>
+                              <td align="right">${payment_method}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Balance (on delivery):</td>
+                              <td align="right">#${balance}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
 
-                        <p>#${shipping_fee}</p>
-                      </div>
+                    <hr />
 
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Order total (+ shipping):</p>
+                    <h3
+                      style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                      Shipping Details</h3>
 
-                        <p>#${order_total}</p>
-                      </div>
+                    <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Full Name:</td>
+                              <td align="right">${firstName} ${lastName}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Email Address:</td>
+                              <td align="right">${email}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Phone Number:</td>
+                              <td align="right">${phone_number}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Shipping Address:</td>
+                              <td align="right">${shipping_address}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
 
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Paid:</p>
-
-                        <p>${paid}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Reference:</p>
-
-                        <p>${reference}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Payment Provider:</p>
-
-                        <p>${payment_provider}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Payment Method:</p>
-
-                        <p>${payment_method}</p>
-                      </div>
-
-                      <div style="display: flex; justify-content: space-between;">
-                        <p>Balance (on delivery):</p>
-
-                        <p>#${balance}</p>
-                      </div>
-                    </div>
                   </td>
                 </tr>
               </table>
@@ -1390,8 +1346,244 @@ return(
       </td>
     </tr>
   </table>
-  </body>
-  </html>`
+</body>
+
+</html>`
+)
+}
+
+const order_canceled = (
+  date_placed, 
+  order_id, 
+  shipping_fee, 
+  order_total, 
+  paid, 
+  reference, 
+  payment_provider, 
+  payment_method, 
+  balance,
+  items
+) => {
+return(
+  `
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <style>
+    @media only screen and (max-width: 600px) {
+      .inner-body {
+        width: 100% !important;
+      }
+
+      .footer {
+        width: 100% !important;
+      }
+    }
+
+    @media only screen and (max-width: 500px) {
+      .button {
+        width: 100% !important;
+      }
+    }
+
+    .item-title {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-bottom: solid 1px #3d4852;
+    }
+  </style>
+</head>
+
+<body
+  style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -webkit-text-size-adjust: none; background-color: #eff3e7; color: #718096; height: 100%; line-height: 1.4; margin: 0; padding: 0; width: 100% !important;">
+  <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation"
+    style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #eff3e7; margin: 0; padding: 0; width: 100%;">
+    <tr>
+      <td align="center"
+        style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
+        <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation"
+          style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; margin: 0; padding: 0; width: 100%;">
+          <tr>
+          <tr>
+            <td class="header"
+              style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; padding: 35px 0; text-align: center;">
+              <a href="http://localhost:3000"
+                style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #056424; font-size: 1.5rem; font-weight: bold; text-decoration: none; display: inline-block;">
+                <div style="display: flex; justify-content: center;">
+                  <img
+                    src="https://www.kindpng.com/picc/m/1-15146_image-result-for-leaf-vector-origins-pinterest-vector.png"
+                    style="width: 40px; height: 40px;" />
+
+                  <span style="margin-left: 0.5rem; margin-top: 3px; font-family: sans-serif;"><i>eden</i></span>
+                </div>
+              </a>
+            </td>
+          </tr>
+          <!-- Email Body -->
+          <tr>
+            <td class="body" width="100%" cellpadding="0" cellspacing="0"
+              style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; background-color: #edf2f7; border-bottom: 1px solid #edf2f7; border-top: 1px solid #edf2f7; margin: 0; padding-top: 50px; padding-bottom: 50px; width: 100%;">
+              <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation"
+                style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; background-color: #ffffff; border-color: #e8e5ef; border-radius: 2px; border-width: 1px; box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015); margin: 0 auto; padding: 0; width: 670px;">
+                <!-- Body content -->
+                <tr>
+                  <td class="content-cell"
+                    style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
+                    <h1
+                      style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 18px; font-weight: bold; margin-top: 40px; text-align: center;">
+                      ORDER CANCELED</h1>
+
+                    <p style="text-align: center;">Your order has been canceled on your request. (If you did not cancel
+                      this order then please be notified that your order could not be processed at this time. We
+                      apologize for the inconveniences) Have a great day!</p>
+
+                    <hr />
+
+                    <h3
+                      style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                      Order Items</h3>
+
+                      <div>
+                        <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                          <tr>
+                            <td width="25%" style="border-bottom: solid 1px #3d4852;">
+                              <p>Image</p>
+                            </td>
+                      
+                            <td width="25%" style="border-bottom: solid 1px #3d4852;">
+                              <p>Name</p>
+                            </td>
+                      
+                            <td width="25%" style="border-bottom: solid 1px #3d4852;">
+                              <p>Quantity</p>
+                            </td>
+                      
+                            <td width="25%" style="border-bottom: solid 1px #3d4852;">
+                              <p>Total Price</p>
+                            </td>
+                          </tr>
+                        </table>
+                      
+                        <div style="margin-top: 15px;">
+                          ${items}
+                        </div>
+                      </div>
+
+
+                    <h3
+                      style="margin-top: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; color: #3d4852; font-size: 15px; font-weight: bold; text-align: center;">
+                      Order Summary</h3>
+
+                    <p style="text-align: center;">Date Placed: ${date_placed}</p>
+                    <p style="text-align: center;">Order ID: ${order_id}</p>
+
+                    <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Shipping fee:</td>
+                              <td align="right">#${shipping_fee}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Order total (+ shipping):</td>
+                              <td align="right">#${order_total}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Paid:</td>
+                              <td align="right">${paid}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Reference:</td>
+                              <td align="right">${reference}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Payment Provider:</td>
+                              <td align="right">${payment_provider}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Payment Method:</td>
+                              <td align="right">${payment_method}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding-bottom: 20px;">
+                          <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td>Balance (on delivery):</td>
+                              <td align="right">#${balance}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative;">
+              <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation"
+                style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px; margin: 0 auto; padding: 0; text-align: center; width: 570px;">
+                <tr>
+                  <td class="content-cell" align="center"
+                    style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; max-width: 100vw; padding: 32px;">
+                    <p
+                      style="box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; position: relative; line-height: 1.5em; margin-top: 0; color: #2d3748; font-size: 12px; text-align: center;">
+                      © ${year} Eden. All rights reserved.</p>
+
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>`
 )
 }
 
