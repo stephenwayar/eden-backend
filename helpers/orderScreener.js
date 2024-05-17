@@ -1,23 +1,22 @@
-function orderScreener(order, firstName, ID){
+function orderScreener(order, firstName, ID) {
   const items = order.order_items.map(item => (
     `
-    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: solid 1px #3d4852; padding-top: 15px; padding-bottom: 15px;">
-      <div>
-        <img style="width: 85%; height: 95px" src='${item.product.images[0].url}'/>
-      </div>
-
-      <div style="display: flex; align-items: center">
-        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.product.name}</p>
-      </div>
-
-      <div style="display: flex; align-items: center">
-        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.quantity}</p>
-      </div>
-
-      <div style="display: flex; align-items: center">
-        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">#${item.total_price}</p>
-      </div>
-    </div>`
+    <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+      <tr style="border-bottom: solid 1px #3d4852; padding-top: 15px; padding-bottom: 15px;">
+        <td>
+          <img style="width: 85%; height: 95px;" src="${item.product.images[0].url}" />
+        </td>
+        <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          ${item.product.name}
+        </td>
+        <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          ${item.quantity}
+        </td>
+        <td style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          #${item.total_price}
+        </td>
+      </tr>
+    </table>`
   )).join('')
 
   const confirmationSMS = `Hello ${firstName}, \n\nYour order with ID: #${ID} is confirmed! Check your email for your package details. We will let you know when your order is being delivered. \n\nCheers!`
@@ -33,7 +32,7 @@ function orderScreener(order, firstName, ID){
   const date_placed = order.date_placed
   const id = order._id
   const shipping_fee = order.shipping_fee
-  const amount =  order.amount
+  const amount = order.amount
   const paid = order.paid
   const customer = order.customer.email
   const fName = order.customer.firstName
@@ -42,7 +41,7 @@ function orderScreener(order, firstName, ID){
   const phone_number = order.customer.phone_number
   const shipping_address = order.customer.shipping_address
 
-  return{
+  return {
     reference,
     payment_provider,
     payment_method,
