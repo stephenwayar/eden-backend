@@ -1,0 +1,149 @@
+services:
+  auth:
+    container_name: auth_container
+    build:
+      context: .
+      dockerfile: ./auth/Dockerfile
+      target: development
+    command: npm run start:auth
+    env_file:
+      - ./.env
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - eden_network
+    depends_on:
+      - mongo
+
+  user:
+    container_name: user_container
+    build:
+      context: .
+      dockerfile: ./user/Dockerfile
+      target: development
+    command: npm run start:user
+    env_file:
+      - ./.env
+    ports:
+      - 3005:3005
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - eden_network
+    depends_on:
+      - mongo
+
+  product:
+    container_name: product_container
+    build:
+      context: .
+      dockerfile: ./product/Dockerfile
+      target: development
+    command: npm run start:product
+    env_file:
+      - ./.env
+    ports:
+      - 3002:3002
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - eden_network
+    depends_on:
+      - mongo
+
+  notification:
+    container_name: notification_container
+    build:
+      context: .
+      dockerfile: ./notification/Dockerfile
+      target: development
+    command: npm run start:notification
+    env_file:
+      - ./.env
+    ports:
+      - 3004:3004
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - eden_network
+    depends_on:
+      - mongo
+
+  order:
+    container_name: order_container
+    build:
+      context: .
+      dockerfile: ./order/Dockerfile
+      target: development
+    command: npm run start:order
+    env_file:
+      - ./.env
+    ports:
+      - 3003:3003
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - eden_network
+    depends_on:
+      - mongo
+
+  webserver:
+    build:
+      context: ./webserver
+      dockerfile: Dockerfile
+    container_name: webserver_container
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - eden_network
+    restart: always
+    depends_on:
+      - auth
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo_container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: eden
+      MONGO_INITDB_ROOT_PASSWORD: eden
+    ports:
+      - 27017:27017
+    volumes:
+      - ./database/mongo:/data/db
+    networks:
+      - eden_network
+    restart: always
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    networks:
+      - eden_network
+
+  kafka:
+    image: wurstmeister/kafka:2.11-1.1.1
+    ports:
+      - 9092:9092
+    links:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: ${HOST_IP}
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLED: 'true'
+      KAFKA_DELETE_TOPIC_ENABLED: 'true'
+      KAFKA_CREATE_TOPICS: "topic-test:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - eden_network
+    restart: always
+
+networks:
+  eden_network:

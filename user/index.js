@@ -1,0 +1,10 @@
+const app = require('./app')
+const http = require('http')
+const logger = require('../utils/logger')
+require('dotenv').config();
+
+const server = http.createServer(app)
+
+server.listen(process.env.USER_PORT, () => {
+  logger.info(`User service running on port ${process.env.USER_PORT}`)
+})

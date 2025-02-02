@@ -7,7 +7,13 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start:auth": "node ./auth/index.js",
+    "start:product": "node ./product/index.js",
+    "start:order": "node ./order/index.js",
+    "start:notification": "node ./notification/index.js",
+    "start:user": "node ./user/index.js",
+    "start:services": "concurrently \"npm run start:auth --watch\" \"npm run start:user --watch\" \"npm run start:product --watch\" \"npm run start:order --watch\" \"npm run start:notification --watch\""
   },
   "author": "Stephen Wayar",
   "license": "MIT",
@@ -16,7 +22,7 @@
     "cloudinary": "^1.31.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.4.7",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.7",
@@ -28,6 +34,7 @@
   "devDependencies": {
     "eslint": "^8.16.0",
     "jest": "^28.1.0",
-    "supertest": "^6.2.4"
+    "supertest": "^6.2.4",
+    "concurrently": "^9.0.1"
   }
 }

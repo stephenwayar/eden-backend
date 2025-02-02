@@ -1,0 +1,1 @@
+// This microservice only listens to kafka topics and sends emails and sms based on the topic triggered. It does not interface directly with the client.
